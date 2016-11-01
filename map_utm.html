@@ -16,7 +16,7 @@
 		<script src="https://openlayers.org/en/v3.19.0/build/ol.js"></script>
 		<script>
 			function read() {
-				if ((document.getElementById('lon').value > 178) || (document.getElementById('lon').value < -178)) {
+				if ((document.getElementById('lon').value > 178) || (document.getElementById('lon').value < -178)|| (document.getElementById('lat').value > 87) || (document.getElementById('lat').value < -87)) {
 					document.getElementById('status').style.color = 'red';
 
 						document.getElementById('status').innerHTML = "This tool does not run in this area. Use other software to solve your problem.";
