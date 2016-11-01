@@ -4,12 +4,10 @@
 		<title>Check UTM Coordinate von Manfred Egger</title>
 		<style>
 			* {
-				font-family:  Arial, Helvetica, sans-serif;
+				font-family: Arial, Helvetica, sans-serif;
 				background-color: #e6e6e6;
 				font-weight: 600;
-				
 			}
-			
 
 		</style>
 		<link rel="stylesheet" href="https://openlayers.org/en/v3.19.0/css/ol.css" type="text/css">
@@ -18,52 +16,60 @@
 		<script src="https://openlayers.org/en/v3.19.0/build/ol.js"></script>
 		<script>
 			function read() {
-				if (map.getView().getZoom() > 12) {
-					document.getElementById('status').style.color = 'orange';
-					document.getElementById('status').innerHTML = "STATUS: No UTM EPSG-Code  found. Check the fields for the unknown coordinate, change your map extent or check if the unknown coordinate is a UTM coordinate.";
-					var lon = document.getElementById('lon').value;
-					var lon_modulo = lon - (lon % 1);
-					var lon_string = "" + lon_modulo;
-					lon_string = lon_string.replace(".", "dot");
-					
-					if (lon_string.indexOf("dot") == -1) {
-						lon_string = lon_string + "dot0";
-					}
-					lat = document.getElementById('lat').value;
-					var lat_modulo = lat - (lat % 1);
-					var lat_string = "" + lat_modulo;
-					lat_string = lat_string.replace(".", "dot");
-					
-					if (lat_string.indexOf("dot") == -1) {
-						lat_string = lat_string + "dot0";
-					}
-					var path = lon_string + "_" + lat_string + ".txt";
-					
-					var txtFile = new XMLHttpRequest();
-					txtFile.open("GET", "https://raw.githubusercontent.com/maegger/UTM_Database/master/_" + path, true);
-					txtFile.onreadystatechange = function() {
-						if (txtFile.readyState === 4) {
+				if ((document.getElementById('lon').value > 178) || (document.getElementById('lon').value < -178)) {
+					document.getElementById('status').style.color = 'red';
 
-							// Makes sure the document is ready to parse.
-							if (txtFile.status === 200) {
-								// Makes sure it's found the file.
-								inhalt = txtFile.responseText;
-								liste = inhalt.split("\n");
-								var arrayLength = liste.length;
+						document.getElementById('status').innerHTML = "This tool does not run in this area. Use other software to solve your problem.";
+				} else {
 
-								for (var i = 0; i < arrayLength; i++) {
-									var epsg = liste[i].split(";")[0];
-									var wkt = liste[i].split(";")[1];
-									
-									var x = document.getElementById('x').value;
-									var y = document.getElementById('y').value;
-									//var point_geom = new ol.geom.Point([x, y]);
-									var format = new ol.format.WKT();
-									var feature = format.readFeature(wkt);
-									if (ol.extent.containsXY(feature.getGeometry().getExtent(), x, y) == true) {
-										
-										document.getElementById('status').style.color = 'green';
-										document.getElementById('status').innerHTML = "STATUS:  UTM EPSG-Code: " + epsg+ " is matching the unknown coordinate.";
+					if (map.getView().getZoom() > 12) {
+						document.getElementById('status').style.color = 'orange';
+						document.getElementById('status').innerHTML = "STATUS: No UTM EPSG-Code  found. Check the fields for the unknown coordinate, change your map extent or check if the unknown coordinate is a UTM coordinate.";
+						var lon = document.getElementById('lon').value;
+						var lon_modulo = lon - (lon % 1);
+						var lon_string = "" + lon_modulo;
+						lon_string = lon_string.replace(".", "dot");
+
+						if (lon_string.indexOf("dot") == -1) {
+							lon_string = lon_string + "dot0";
+						}
+						lat = document.getElementById('lat').value;
+						var lat_modulo = lat - (lat % 1);
+						var lat_string = "" + lat_modulo;
+						lat_string = lat_string.replace(".", "dot");
+
+						if (lat_string.indexOf("dot") == -1) {
+							lat_string = lat_string + "dot0";
+						}
+						var path = lon_string + "_" + lat_string + ".txt";
+
+						var txtFile = new XMLHttpRequest();
+						txtFile.open("GET", "https://raw.githubusercontent.com/maegger/UTM_Database/master/_" + path, true);
+						txtFile.onreadystatechange = function() {
+							if (txtFile.readyState === 4) {
+
+								// Makes sure the document is ready to parse.
+								if (txtFile.status === 200) {
+									// Makes sure it's found the file.
+									inhalt = txtFile.responseText;
+									liste = inhalt.split("\n");
+									var arrayLength = liste.length;
+
+									for (var i = 0; i < arrayLength; i++) {
+										var epsg = liste[i].split(";")[0];
+										var wkt = liste[i].split(";")[1];
+
+										var x = document.getElementById('x').value;
+										var y = document.getElementById('y').value;
+										//var point_geom = new ol.geom.Point([x, y]);
+										var format = new ol.format.WKT();
+										var feature = format.readFeature(wkt);
+										if (ol.extent.containsXY(feature.getGeometry().getExtent(), x, y) == true) {
+
+											document.getElementById('status').style.color = 'green';
+											document.getElementById('status').innerHTML = "STATUS:  UTM EPSG-Code: " + epsg + " is matching the unknown coordinate.";
+										}
+
 									}
 
 								}
@@ -72,14 +78,13 @@
 
 						}
 
+						txtFile.send(null);
+					} else {
+
+						document.getElementById('status').style.color = 'red';
+
+						document.getElementById('status').innerHTML = "STATUS: Zoom (+) into the map until the color of this text changes to orange or green.";
 					}
-
-					txtFile.send(null);
-				} else {
-
-					document.getElementById('status').style.color = 'red';
-
-					document.getElementById('status').innerHTML = "STATUS: Zoom (+) into the map until the color of this text changes to orange or green.";
 				}
 			}
 
@@ -88,10 +93,11 @@
 	</head>
 	<body>
 		<h1 style="font-weight: bold">Check UTM Coordinate by Manfred Egger</h1>
-		
+
 		<div id="status" style="font-weight: bold">
 
-		</div><br />
+		</div>
+		<br />
 		Write unknown UTM coordinate in the fields:
 
 		X:
@@ -108,11 +114,8 @@
 		LON:
 		<input type="number" id="lon" value="">
 		<br />
-		
-		
-		
 
-		<div style="width: 60%;height: 60%" id="map" class="map"> </div>
+		<div style="width: 60%;height: 60%" id="map" class="map"></div>
 		Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>.        This tool is using: <a href="https://openlayers.org/">https://openlayers.org/</a>.
 		<script>
 			map = new ol.Map({
