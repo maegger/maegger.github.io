@@ -24,7 +24,7 @@
 
 					if (map.getView().getZoom() > 12) {
 						document.getElementById('status').style.color = 'orange';
-						document.getElementById('status').innerHTML = "STATUS: No UTM EPSG-Code  found. Check the fields for the unknown coordinate, change your map extent or check if the unknown coordinate is a UTM coordinate.";
+						document.getElementById('status').innerHTML = "STATUS: No UTM EPSG-Code  found. Change your map extent or check if the coordinate belongs to another coordinate system.";
 						var lon = document.getElementById('lon').value;
 						var lon_modulo = lon - (lon % 1);
 						var lon_string = "" + lon_modulo;
