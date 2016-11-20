@@ -38,7 +38,7 @@
 
                 var feature = e.element; //the feature selected
                 var request = new XMLHttpRequest();
-                request.open('GET', 'http://ehyd.gv.at/eHYD/BemessungsniederschlagExtraData?id=' + feature.get("name"), true);
+                request.open('GET', 'https://ehyd.gv.at/eHYD/BemessungsniederschlagExtraData?id=' + feature.get("name"), true);
                 request.send(null);
                 request.onreadystatechange = function () {
                     if (request.readyState === 4 && request.status === 200) {
