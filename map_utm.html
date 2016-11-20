@@ -146,10 +146,11 @@
 			function onMoveEnd(evt) {
 				var map = evt.map;
 				var extent = map.getView().calculateExtent(map.getSize());
-				var bottomLeft = ol.proj.transform(ol.extent.getBottomLeft(extent), 'EPSG:3857', 'EPSG:4326');
-				var topRight = ol.proj.transform(ol.extent.getTopRight(extent), 'EPSG:3857', 'EPSG:4326');
-				display('lon', wrapLon(bottomLeft[0]));
-				display('lat', bottomLeft[1]);
+				                                
+				var center = ol.proj.transform(ol.extent.getCenter(extent), 'EPSG:3857', 'EPSG:4326');
+				
+				display('lon', wrapLon(center[0]));
+				display('lat', center[1]);
 				read();
 
 			}
