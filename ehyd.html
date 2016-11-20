@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Simple Map</title>
+        <title>TESTANWENDUNG: eHyd-Bemessungswerte</title>
         <link rel="stylesheet" href="https://openlayers.org/en/v3.19.1/css/ol.css" type="text/css">
         <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
         <script src="https://openlayers.org/en/v3.19.1/build/ol.js"></script>
     </head>
     <body>
+        <h1>TESTANWENDUNG: eHyd-Bemessungswerte</h1>
+         <div id="gitterpunkt"> Gitterpunkt aus Karte wählen... </div>
         <div id="map" class="map"></div>
+       
         <script>
             var vectorSource = new ol.source.Vector({});
 
@@ -25,11 +28,34 @@
                 target: 'map',
                 view: new ol.View({
                     center: ol.proj.transform([13, 47.35], 'EPSG:4326', 'EPSG:3857'),
-                    zoom: 6
+                    zoom: 7
                 })
             });
 
+            var select_interaction = new ol.interaction.Select();
 
+            select_interaction.getFeatures().on("add", function (e) {
+
+                var feature = e.element; //the feature selected
+                var request = new XMLHttpRequest();
+                request.open('GET', 'http://ehyd.gv.at/eHYD/BemessungsniederschlagExtraData?id=' + feature.get("name"), true);
+                request.send(null);
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4 && request.status === 200) {
+                        var type = request.getResponseHeader('Content-Type');
+                        if (type.indexOf("text") !== 1) {
+                            inhalt = request.responseText;
+                            auflistung = inhalt.split("\n");
+                            document.getElementById('gitterpunkt').innerHTML =  auflistung[1]+ "<br><br>"  ;
+                           
+                           
+                        }
+                    }
+                }
+              
+            });
+
+            map.addInteraction(select_interaction);
 
             var request = new XMLHttpRequest();
             request.open('GET', 'https://raw.githubusercontent.com/maegger/CheckAustrianProjectionDatabase/master/liste.txt', true);
@@ -40,15 +66,15 @@
                     if (type.indexOf("text") !== 1) {
                         inhalt = request.responseText;
                         liste = inhalt.split("\n");
-                       
+
                         for (var i = 0; i < liste.length; i++) {
-                            
+
                             var x = parseFloat(liste[i].split(";")[1]);
-                            
+
                             var y = parseFloat(liste[i].split(";")[2]);
-                            
+
                             var name = liste[i].split(";")[0];
-                            
+
                             var thing = new ol.geom.Point(ol.proj.transform([x, y], 'EPSG:4326', 'EPSG:3857'));
 
 
@@ -57,7 +83,7 @@
                                 geometry: thing
                             });
                             vectorSource.addFeature(featurething);
-                            
+
                         }
                     }
                 }
