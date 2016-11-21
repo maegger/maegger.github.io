@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>TESTANWENDUNG: eHyd-Bemessungswerte</h1>
-         <div id="gitterpunkt"> Gitterpunkt aus Karte wählen... </div>
+         <div id="gitterpunkt"> Gitterpunkt aus Karte wählen... <br><br></div>
         <div id="map" class="map"></div>
        
         <script>
@@ -37,7 +37,8 @@
             select_interaction.getFeatures().on("add", function (e) {
 
                 var feature = e.element; //the feature selected
-                var request = new XMLHttpRequest();
+                document.getElementById('gitterpunkt').innerHTML =  "Gitterpunktnummer: " + feature.get("name") + "<br><br>" ;
+                /*var request = new XMLHttpRequest();
                 request.open('GET', 'http://ehyd.gv.at/eHYD/BemessungsniederschlagExtraData?id=' + feature.get("name"), true);
                 request.send(null);
                 request.onreadystatechange = function () {
@@ -45,13 +46,12 @@
                         var type = request.getResponseHeader('Content-Type');
                         if (type.indexOf("text") !== 1) {
                             inhalt = request.responseText;
-                            auflistung = inhalt.split("\n");
-                            document.getElementById('gitterpunkt').innerHTML =  auflistung[1]+ "<br><br>"  ;
-                           
+                            auflistung = inhalt.split("\n");    
                            
                         }
                     }
                 }
+                */
               
             });
 
