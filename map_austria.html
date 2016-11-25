@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>WMTS HiDPI example</title>
+        <title>CheckAustrianProjection</title>
         <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -79,54 +79,54 @@
         <style>
             .map {
                 background: white;
+
             }
+
 
         </style>
     </head>
     <body >
         <div class="container-fluid" >
-            <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
 
-
-
-
-            Koordinate mit unbekannten EPSG-CODE eingeben  :
-
-            X:
-            <input  id="x" value="">
-            Y:
-            <input  id="y" value="">
-            <br /><br />
-
-            <div id="status" style="font-weight: bold"></div>
-            <br />
-            Mittelpunkt Kartenfenster: LAT:
-            <input  id="lat"  value="">
-            LON:
-            <input  id="lon" value="">
-            <br />
             <div class="row-fluid">
                 <div class="span12" >
+                    <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
+
+
+
+
+                    Koordinate mit unbekannten EPSG-CODE eingeben  :
+
+                    X:
+                    <input  id="x" value="">
+                    Y:
+                    <input  id="y" value="">
+                    <br />
+                    <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate nur auf folgende EPSG-Codes: </b>
+                    4326;
+                    31254;
+                    31255;
+                    31256;
+                    31257;
+                    31258;
+                    31259;
+                    31284;
+                    31285;
+                    31286;
+                    31287;
+                    25833;
+                    25832
+                    </br><br>
+                    <div id="status" style="font-weight: bold"></div>
+                    <br />
+                    Mittelpunkt Karte: LAT:
+                    <input  id="lat"  value="">
+                    LON:
+                    <input  id="lon" value="">
+
                     <div id="map" class="map" ></div>
                 </div>
             </div>
-            <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate nur auf folgende EPSG-Codes: </b>
-            4326;
-            31254;
-            31255;
-            31256;
-            31257;
-            31258;
-            31259;
-            31284;
-            31285;
-            31286;
-            31287;
-            25833;
-            25832
-
-            <br><br>
-
             Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>. Datenquelle: <a href="https://www.basemap.at/">basemap.at</a>
         </div>
         <script>
@@ -161,12 +161,12 @@
             }));
             });
             function display(id, value) {
-            
+
             document.getElementById(id).value = value.toFixed(3);
             }
 
             function wrapLon(value) {
-            
+
             var worlds = Math.floor((value + 180) / 360);
             return value - (worlds * 360);
             }
