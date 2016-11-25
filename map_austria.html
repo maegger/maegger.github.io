@@ -79,54 +79,52 @@
         <style>
             .map {
                 background: white;
+                height: 75%;
+                width: 80%;
+            }
 
+            body, html {
+                height: 100%;
+                width: 100%;
             }
 
 
         </style>
     </head>
     <body >
-        <div class="container-fluid" >
+        <div style="height: 90%;width: 99%">
+            <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
+            Koordinate mit unbekannten EPSG-CODE eingeben  :
 
-            <div class="row-fluid">
-                <div class="span12" >
-                    <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
+            X:
+            <input  id="x" value="">
+            Y:
+            <input  id="y" value="">
+            <br />
+            ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate nur auf folgende EPSG-Codes:
+            4326;
+            31254;
+            31255;
+            31256;
+            31257;
+            31258;
+            31259;
+            31284;
+            31285;
+            31286;
+            31287;
+            25833;
+            25832
+            </br><br>
+            <div id="status" style="font-weight: bold"></div>
+            <br />
+            Mittelpunkt Karte: LAT:
+            <input  id="lat"  value="">
+            LON:
+            <input  id="lon" value="">
 
+            <div id="map" class="map" style="width: 100%" ></div>
 
-
-
-                    Koordinate mit unbekannten EPSG-CODE eingeben  :
-
-                    X:
-                    <input  id="x" value="">
-                    Y:
-                    <input  id="y" value="">
-                    <br />
-                    <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate nur auf folgende EPSG-Codes: </b>
-                    4326;
-                    31254;
-                    31255;
-                    31256;
-                    31257;
-                    31258;
-                    31259;
-                    31284;
-                    31285;
-                    31286;
-                    31287;
-                    25833;
-                    25832
-                    </br><br>
-                    <div id="status" style="font-weight: bold"></div>
-                    <br />
-                    Mittelpunkt Karte: LAT:
-                    <input  id="lat"  value="">
-                    LON:
-                    <input  id="lon" value="">
-
-                    <div id="map" class="map" ></div>
-                </div>
-            </div>
             Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>. Datenquelle: <a href="https://www.basemap.at/">basemap.at</a>
         </div>
         <script>
