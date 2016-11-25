@@ -1,62 +1,189 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-<title>WMTS HiDPI example</title>
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
-<script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+    <head>
+        <title>WMTS HiDPI example</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script>
+            function read() {
+            if (map.getView().getZoom() > 12) {
+            document.getElementById('status').style.color = 'orange';
+            document.getElementById('status').innerHTML = "STATUS: Kein passender EPSG-Code gefunden. Ändern Sie den Kartenausschnitt oder überprüfen Sie die Eingabefelder der unbekannten Koordinate.";
+            var lon = document.getElementById('lon').value;
+            var lon_modulo = lon - (lon % 0.25);
+            var lon_string = "" + lon_modulo;
+            lon_string = lon_string.replace(".", "dot");
 
-<style>
-.map {
-  background: white;
-}
 
-</style>
-</head>
-<body>
-<div class="container-fluid">
+            if (lon_string.indexOf("dot") == -1) {
+            lon_string = lon_string + "dot0";
+            }
 
-<div class="row-fluid">
-  <div class="span12">
-    <div id="map" class="map"></div>
-  </div>
-</div>
+            lat = document.getElementById('lat').value;
+            var lat_modulo = lat - (lat % 0.25);
+            var lat_string = "" + lat_modulo;
+            lat_string = lat_string.replace(".", "dot");
 
-</div>
-<script>
-var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+            if (lat_string.indexOf("dot") == -1)  {
+            lat_string = lat_string + "dot0";
+            }
+            var path = lon_string + "_" + lat_string + ".txt";
+            var txtFile = new XMLHttpRequest();
+            txtFile.open("GET", "https://raw.githubusercontent.com/maegger/CheckAustrianProjectionDatabase/master/" + path, true);
+            txtFile.onreadystatechange = function() {
+            if (txtFile.readyState === 4) {
 
-// HiDPI support:
-// * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
-// * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
-var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
-var layer = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
-var tilePixelRatio = hiDPI ? 2 : 1;
+            // Makes sure the document is ready to parse.
+            if (txtFile.status === 200) {
+            // Makes sure it's found the file.
+            inhalt = txtFile.responseText;
+            liste = inhalt.split("\n");
+            var arrayLength = liste.length;
 
-var map = new ol.Map({
-  target: 'map',
-  view: new ol.View({
-    center: [1823849, 6143760],
-    zoom: 11
-  })
-});
+            for (var i = 0; i < arrayLength; i++) {
+            var epsg = liste[i].split(";")[0];
+            var wkt = liste[i].split(";")[1];
+            var x = document.getElementById('x').value;
+            var y = document.getElementById('y').value;
+            //var point_geom = new ol.geom.Point([x, y]);
+            var format = new ol.format.WKT();
+            var feature = format.readFeature(wkt);
+            if (ol.extent.containsXY(feature.getGeometry().getExtent(), x, y) == true) {
+            document.getElementById('status').style.color = 'green';
+            document.getElementById('status').innerHTML = "STATUS: Die Koordinate hat mit großer Wahrscheinlichkeit den EPSG-Code: " + epsg;
+            }
 
-$.ajax(capabilitiesUrl).then(function(response) {
-  var result = new ol.format.WMTSCapabilities().read(response);
-  var options = ol.source.WMTS.optionsFromCapabilities(result, {
-    layer: layer,
-    matrixSet: 'google3857',
-    requestEncoding: 'REST',
-    style: 'normal'
-  });
-  options.tilePixelRatio = tilePixelRatio;
-  map.addLayer(new ol.layer.Tile({
-    source: new ol.source.WMTS(options)
-  }));
-});
+            }
 
-</script>
-</body>
+            }
+
+            }
+
+            }
+
+            txtFile.send(null);
+            } else {
+
+            document.getElementById('status').style.color = 'red';
+
+            document.getElementById('status').innerHTML = "STATUS: Bitte navigieren Sie mit Zoom ('+') und Pan zu dem Ort, wo sich die unbekannte Koordinate befindet, bis die Farbe und der Inhalt dieses Text wechselt.";
+            }
+            }
+
+        </script>
+
+
+        <style>
+            .map {
+                background: white;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
+
+
+
+
+            Koordinate mit unbekannten EPSG-CODE eingeben  :
+
+            X:
+            <input type="number" id="x" value="">
+            Y:
+            <input type="number" id="y" value="">
+            <br /><br />
+
+            <div id="status" style="font-weight: bold"></div>
+            <br />
+            Mittelpunkt Kartenfenster: LAT:
+            <input type="number" id="lat"  value="">
+            LON:
+            <input type="number" id="lon" value="">
+            <br /><br>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div id="map" class="map"></div>
+                </div>
+            </div>
+            <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate auf folgende EPSG-Codes: </b>
+            4326;
+            31254;
+            31255;
+            31256;
+            31257;
+            31258;
+            31259;
+            31284;
+            31285;
+            31286;
+            31287;
+            25833;
+            25832
+
+            <br><br>
+
+            Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>. Datenquelle: <a href="https://www.basemap.at/">basemap.at</a>
+        </div>
+        <script>
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+            center: [1823849, 6143760],
+            zoom: 11
+            })
+            });
+
+            $.ajax(capabilitiesUrl).then(function(response) {
+            var result = new ol.format.WMTSCapabilities().read(response);
+            var options = ol.source.WMTS.optionsFromCapabilities(result, {
+            layer: layer,
+            matrixSet: 'google3857',
+            requestEncoding: 'REST',
+            style: 'normal'
+            });
+            options.tilePixelRatio = tilePixelRatio;
+            map.addLayer(new ol.layer.Tile({
+            source: new ol.source.WMTS(options)
+            }));
+            });
+            function display(id, value) {
+            document.getElementById(id).value = value.toFixed(3);
+            }
+
+            function wrapLon(value) {
+            var worlds = Math.floor((value + 180) / 360);
+            return value - (worlds * 360);
+            }
+
+            function onMoveEnd(evt) {
+            var map = evt.map;
+            var extent = map.getView().calculateExtent(map.getSize());
+
+            var center = ol.proj.transform(ol.extent.getCenter(extent), 'EPSG:3857', 'EPSG:4326');
+
+            display('lon', wrapLon(center[0]));
+            display('lat', center[1]);
+            read();
+
+            }
+
+
+            map.on('moveend', onMoveEnd);
+
+        </script>
+    </body>
 </html>
