@@ -11,7 +11,7 @@
             function read() {
             if (map.getView().getZoom() > 12) {
             document.getElementById('status').style.color = 'orange';
-            document.getElementById('status').innerHTML = "STATUS: Kein passender EPSG-Code gefunden. Ã„ndern Sie den Kartenausschnitt oder Ã¼berprÃ¼fen Sie die Eingabefelder der unbekannten Koordinate.";
+            document.getElementById('status').innerHTML = "STATUS: Kein passender EPSG-Code gefunden. Ändern Sie den Kartenausschnitt oder überprüfen Sie die Eingabefelder der unbekannten Koordinate.";
             var lon = document.getElementById('lon').value;
             var lon_modulo = lon - (lon % 0.25);
             var lon_string = "" + lon_modulo;
@@ -53,7 +53,7 @@
             var feature = format.readFeature(wkt);
             if (ol.extent.containsXY(feature.getGeometry().getExtent(), x, y) == true) {
             document.getElementById('status').style.color = 'green';
-            document.getElementById('status').innerHTML = "STATUS: Die Koordinate hat mit groÃŸer Wahrscheinlichkeit den EPSG-Code: " + epsg;
+            document.getElementById('status').innerHTML = "STATUS: Die Koordinate hat mit großer Wahrscheinlichkeit den EPSG-Code: " + epsg;
             }
 
             }
@@ -93,24 +93,24 @@
             Koordinate mit unbekannten EPSG-CODE eingeben  :
 
             X:
-            <input type="number" id="x" value="">
+            <input  id="x" value="">
             Y:
-            <input type="number" id="y" value="">
+            <input  id="y" value="">
             <br /><br />
 
             <div id="status" style="font-weight: bold"></div>
             <br />
             Mittelpunkt Kartenfenster: LAT:
-            <input type="number" id="lat"  value="">
+            <input  id="lat"  value="">
             LON:
-            <input type="number" id="lon" value="">
-            <br /><br>
+            <input  id="lon" value="">
+            <br />
             <div class="row-fluid">
                 <div class="span12" >
                     <div id="map" class="map" ></div>
                 </div>
             </div>
-            <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate auf folgende EPSG-Codes: </b>
+            <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate nur auf folgende EPSG-Codes: </b>
             4326;
             31254;
             31255;
@@ -143,7 +143,7 @@
             target: 'map',
             view: new ol.View({
             center: [1537897, 6039579],
-            zoom: 8
+            zoom: 7
             })
             });
 
@@ -161,6 +161,7 @@
             }));
             });
             function display(id, value) {
+            
             document.getElementById(id).value = value.toFixed(3);
             }
 
