@@ -83,8 +83,8 @@
 
         </style>
     </head>
-    <body>
-        <div class="container-fluid">
+    <body >
+        <div class="container-fluid" >
             <h1 style="font-weight: bold">CheckAustrianProjection by Manfred Egger</h1>
 
 
@@ -106,8 +106,8 @@
             <input type="number" id="lon" value="">
             <br /><br>
             <div class="row-fluid">
-                <div class="span12">
-                    <div id="map" class="map"></div>
+                <div class="span12" >
+                    <div id="map" class="map" ></div>
                 </div>
             </div>
             <b>ACHTUNG: Dieser Prototyp testet die unbekannte Koordinate auf folgende EPSG-Codes: </b>
@@ -165,6 +165,7 @@
             }
 
             function wrapLon(value) {
+            
             var worlds = Math.floor((value + 180) / 360);
             return value - (worlds * 360);
             }
@@ -176,7 +177,7 @@
             var center = ol.proj.transform(ol.extent.getCenter(extent), 'EPSG:3857', 'EPSG:4326');
 
             display('lon', wrapLon(center[0]));
-            display('lat', center[1]);
+            display('lat', wrapLon(center[1]));
             read();
 
             }
