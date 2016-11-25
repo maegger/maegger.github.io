@@ -11,7 +11,7 @@
             function read() {
             if (map.getView().getZoom() > 12) {
             document.getElementById('status').style.color = 'orange';
-            document.getElementById('status').innerHTML = "STATUS: Kein passender EPSG-Code gefunden. Ändern Sie den Kartenausschnitt oder überprüfen Sie die Eingabefelder der unbekannten Koordinate.";
+            document.getElementById('status').innerHTML = "STATUS: Kein passender EPSG-Code gefunden. Verschieben Sie den Kartenausschnitt oder kontrollieren Sie die Eingabefelder der unbekannten Koordinate.";
             var lon = document.getElementById('lon').value;
             var lon_modulo = lon - (lon % 0.25);
             var lon_string = "" + lon_modulo;
@@ -53,7 +53,7 @@
             var feature = format.readFeature(wkt);
             if (ol.extent.containsXY(feature.getGeometry().getExtent(), x, y) == true) {
             document.getElementById('status').style.color = 'green';
-            document.getElementById('status').innerHTML = "STATUS: Die Koordinate hat mit großer Wahrscheinlichkeit den EPSG-Code: " + epsg;
+            document.getElementById('status').innerHTML = "STATUS: Die Koordinate hat wahrscheinlich den EPSG-Code: " + epsg;
             }
 
             }
