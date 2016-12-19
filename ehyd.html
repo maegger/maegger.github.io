@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TESTANWENDUNG: eHyd-Bemessungswerte</title>
+        <title>TESTANWENDUNG: Download Bemessungsniederschlag für ZEMOKOST</title>
         <link rel="stylesheet" href="https://openlayers.org/en/v3.19.1/css/ol.css" type="text/css">
         <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
         <script src="https://openlayers.org/en/v3.19.1/build/ol.js"></script>
     </head>
     <body>
-        <h1>TESTANWENDUNG: Bemessungswerte für ZEMOKOST</h1>
+        <h1>TESTANWENDUNG: Download Bemessungsniederschlag für ZEMOKOST</h1>
         <form>
-            <p>W&auml;hlen Sie den TYP des Bemessungsniederschlags aus:</p>
+            <p>W&auml;hlen Sie zuerst den TYP des Bemessungsniederschlags aus:</p>
             <fieldset >
                 <input type="radio"  id="mc" name="Zahlmethode" value="MaxModN" checked>
                 <label for="mc"> MaxModN</label><br> 
@@ -22,8 +22,8 @@
         </form>
         <div id="gitterpunkt"> Nun k&ouml;nnen Sie mit aus Karte einen Punkt ausw&auml;hlen... Je nach TYP wird ein Downloadlink generiert.<br></div>
         <div id="map" class="map"></div>
-        Verwendete Grundlagendaten: Copyright BMLFUW <br> <br>
-        Bitte beachten Sie bei der Verwendung dieser Webseite die Inhalte dieser Webseite: <a href="http://ehyd.gv.at/assets/eHYD/pdf/20150722_Bemessungsniederschlag.pdf">http://ehyd.gv.at/assets/eHYD/pdf/20150722_Bemessungsniederschlag.pdf</a>
+        Verwendete Grundlagendaten: Copyright BMLFUW &nbsp; <a href="http://ehyd.gv.at/">(http://ehyd.gv.at/)</a>
+        <br><br> Copyright: Manfred Egger, 2016. ACHTUNG: Diese Seite dient als Fallbeispiel für eine frei zug&auml;ngliche GIS-Spezialanwendung im Bereich Naturgefahrenmanagement. Die Richtigkeit der Daten kann derzeit nicht garantiert werden.
         <script>
             var vectorSource = new ol.source.Vector({});
 
