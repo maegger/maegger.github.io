@@ -8,10 +8,21 @@
         <script src="https://openlayers.org/en/v3.19.1/build/ol.js"></script>
     </head>
     <body>
-        <h1>TESTANWENDUNG: eHyd-Bemessungswerte</h1>
-         <div id="gitterpunkt"> Gitterpunkt aus Karte ausw&auml;hlen... <br><br></div>
+        <h1>TESTANWENDUNG: Bemessungswerte für ZEMOKOST</h1>
+        <form>
+            <p>W&auml;hlen Sie den TYP des Bemessungsniederschlags aus:</p>
+            <fieldset >
+                <input type="radio"  id="mc" name="Zahlmethode" value="MaxModN" checked>
+                <label for="mc"> MaxModN</label><br> 
+                <input type="radio" id="vi" name="Zahlmethode" value="Bemessung">
+                <label for="vi"> Bemessung</label><br> 
+                <input type="radio" id="ae" name="Zahlmethode" value="ÖKOSTRA">
+                <label for="ae"> &Ouml;KOSTRA</label> 
+            </fieldset>
+        </form>
+        <div id="gitterpunkt"> Nun können Sie mit aus Karte einen Punkt ausw&auml;hlen... Je nach TYP wird ein Downloadlink generiert.<br></div>
         <div id="map" class="map"></div>
-        Verwendete Grundlagendaten: Copyright OpenStreetMap-Mitwirkende, Copyright BMLFUW <br> <br>
+        Verwendete Grundlagendaten: Copyright BMLFUW <br> <br>
         Bitte beachten Sie bei der Verwendung dieser Webseite die Inhalte dieser Webseite: <a href="http://ehyd.gv.at/assets/eHYD/pdf/20150722_Bemessungsniederschlag.pdf">http://ehyd.gv.at/assets/eHYD/pdf/20150722_Bemessungsniederschlag.pdf</a>
         <script>
             var vectorSource = new ol.source.Vector({});
@@ -36,24 +47,22 @@
             var select_interaction = new ol.interaction.Select();
 
             select_interaction.getFeatures().on("add", function (e) {
-
+                document.getElementById('gitterpunkt').innerHTML = "";
                 var feature = e.element; //the feature selected
-                document.getElementById('gitterpunkt').innerHTML =  "Gitterpunktnummer: " + feature.get("name") + "<br><br>" ;
-                /*var request = new XMLHttpRequest();
-                request.open('GET', 'http://ehyd.gv.at/eHYD/BemessungsniederschlagExtraData?id=' + feature.get("name"), true);
-                request.send(null);
-                request.onreadystatechange = function () {
-                    if (request.readyState === 4 && request.status === 200) {
-                        var type = request.getResponseHeader('Content-Type');
-                        if (type.indexOf("text") !== 1) {
-                            inhalt = request.responseText;
-                            auflistung = inhalt.split("\n");    
-                           
-                        }
-                    }
+                if (document.getElementById("mc").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/maxmodn/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(MaxModN) </a></b><br>";
                 }
-                */
-              
+
+                if (document.getElementById("vi").checked == true) {
+                     document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/bemessung/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                }
+
+                if (document.getElementById("ae").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/oekostra/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
+                }
+                
+                
+
             });
 
             map.addInteraction(select_interaction);
