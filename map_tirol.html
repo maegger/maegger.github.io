@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Orthophoto Tyrol EPSG:4326</title>
+        <style>
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                background-color: #e6e6e6;
+                font-weight: 600;
+
+            }
+
+
+        </style>
         <link rel="stylesheet" href="https://openlayers.org/en/v3.20.0/css/ol.css" type="text/css">
         <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
@@ -24,7 +33,7 @@
             ];
 
             var map = new ol.Map({
-            
+
             layers: layers,
             target: 'map',
             view: new ol.View({
@@ -33,7 +42,7 @@
             zoom: 9
             })
             });
-            
+
         </script>
     </body>
 </html>
