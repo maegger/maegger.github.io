@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EPSG:4326</title>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.20.0/css/ol.css" type="text/css">
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+        <script src="https://openlayers.org/en/v3.20.0/build/ol.js"></script>
+    </head>
+    <body>
+        <h1>Orthofoto Tirol</h1>
+        <div id="map" class="map"></div>
+        Datenquelle: Land Tirol- data.tirol.gv.at
+        <script>
+            var layers = [
+            new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+            url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+            params: {
+            'LAYERS': 'Image_2013-2015_RGB'
+            }
+            })
+            })
+            ];
+
+            var map = new ol.Map({
+            
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+            projection: 'EPSG:4326',
+            center: [11.40, 47.1],
+            zoom: 9
+            })
+            });
+            
+        </script>
+    </body>
+</html>
