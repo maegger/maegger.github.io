@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.20.0/css/ol.css" type="text/css">
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+        <script src="https://openlayers.org/en/v3.20.0/build/ol.js"></script>
+         <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
+            }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+               padding-left: 3px;
+                padding-right: 3px;
+                
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Orthophoto Tyrol EPSG: 3857</h1>
+        <div style="height: 500px" id="map" class="map"></div>
+        Data source: Land Tirol- data.tirol.gv.at
+        <script>
+            var projection = new ol.proj.Projection({
+            code: 'EPSG:3857',
+            units: 'm'
+            });
+            var layers = [
+            new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+            url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+            crossOrigin: 'anonymous',
+
+            params: {
+            'LAYERS': 'Image_2013-2015_RGB'
+            
+            } 
+            })
+            })
+            ];
+
+            var map = new ol.Map({
+            controls: ol.control.defaults().extend([
+            new ol.control.ScaleLine()
+            ]),
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+            projection: projection,
+            center: [1266688, 5977137],
+            zoom: 8
+            })
+            });
+
+        </script>
+    </body>
+</html>
