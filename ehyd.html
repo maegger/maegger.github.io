@@ -6,6 +6,22 @@
         <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
         <script src="https://openlayers.org/en/v3.19.1/build/ol.js"></script>
+        <style>
+            
+
+            body, html {
+                height: 100%;
+                width: 99%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                
+
+                font-weight: 600;
+
+            }
+
+        </style>
     </head>
     <body>
         <h1>TESTANWENDUNG: Download Bemessungsniederschlag ZEMOKOST</h1>
@@ -20,10 +36,12 @@
                 <label for="ae"> &Ouml;KOSTRA</label> 
             </fieldset>
         </form>
+        <br>
         <div id="gitterpunkt"> Nun k&ouml;nnen Sie mit aus Karte einen Punkt ausw&auml;hlen... Je nach TYP wird ein Downloadlink generiert.<br></div>
-        <div id="map" class="map"></div>
-        Verwendete Grundlagendaten: Copyright BMLFUW &nbsp; <a href="http://ehyd.gv.at/">(http://ehyd.gv.at/)</a>
-        <br><br> Copyright: Manfred Egger, 2016. ACHTUNG: Diese Seite dient als Fallbeispiel f&uuml;r eine frei zug&auml;ngliche GIS-Spezialanwendung im Bereich Naturgefahrenmanagement. Die Richtigkeit der Daten kann derzeit nicht garantiert werden.
+        <br>
+        <div id="map" class="map"></div>ACHTUNG: Diese Seite dient als Fallbeispiel f&uuml;r eine frei zug&auml;ngliche GIS-Spezialanwendung im Bereich Naturgefahrenmanagement. Die Richtigkeit der Daten kann derzeit nicht garantiert werden.&nbsp;
+        Quelle der Grundlagendaten: Copyright BMLFUW &nbsp; <a href="http://ehyd.gv.at/">(http://ehyd.gv.at/)</a>
+        <br><br> Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>  
         <script>
             var vectorSource = new ol.source.Vector({});
 
@@ -54,14 +72,14 @@
                 }
 
                 if (document.getElementById("vi").checked == true) {
-                     document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/bemessung/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/bemessung/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
                 }
 
                 if (document.getElementById("ae").checked == true) {
                     document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/oekostra/" + feature.get("name") + ".csv\" download> DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
                 }
-                
-                
+
+
 
             });
 
