@@ -52,22 +52,22 @@ function displayLocationElevation(location, elevator, infowindow) {
     if (status === google.maps.ElevationStatus.OK) {
       // Retrieve the first result
       if (results[0]) {
-	var klasse = 'KLASSE 1: bis 1000'
+	var klasse = 'P1: bis 1000'
 	if (results[0].elevation > 1000 && results[0].elevation < 1600 ){
-		klasse = 'KLASSE 2: bis 1600 m'
+		klasse = 'P2: bis 1600 m'
 	}
         if (results[0].elevation > 1600 && results[0].elevation < 2600 ){
-		klasse = 'KLASSE 3: bis 2600 m'
+		klasse = 'P3: bis 2600 m'
 	}
         if (results[0].elevation > 2600 && results[0].elevation < 3000 ){
-		klasse = 'KLASSE 4: bis 3000 m'
+		klasse = 'P4: bis 3000 m'
 	}
 	if (results[0].elevation > 3000){
-		klasse = 'KLASSE 5: über 3000 m'
+		klasse = 'P5: über 3000 m'
 	}
         // Open the infowindow indicating the elevation at the clicked position.
         infowindow.setContent('SEEHÖHE:  ' +
-            Math.round(results[0].elevation * 100) / 100 + ' m <br><br>' +  klasse);
+            Math.round(results[0].elevation) + ' m <br><br>' +  klasse);
       } else {
         infowindow.setContent('No results found');
       }
