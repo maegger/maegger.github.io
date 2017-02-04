@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.20.0/css/ol.css" type="text/css">
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+        <script src="https://openlayers.org/en/v3.20.0/build/ol.js"></script>
+        <style>
+
+
+            body, html {
+                height: 90%;
+                width: 90%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>DGM-Reader (.asc)</h1>
+        First select a .asc file:<br>
+        <form> 
+            <input type="file" name="file" lang=""  id="file" onchange="loadProfile()" /> <br><br>
+        </form> <br> 
+        
+        <div id="mouse-position"></div><br>
+        <div  id="map" class="map"></div>
+
+        Copyright: Manfred Egger, 2016.
+        <script>
+
+            var fill = new ol.style.Fill({
+                color: [180, 0, 0, 0.0]
+            });
+            var stroke = new ol.style.Stroke({
+                color: [180, 0, 0, 0.9],
+                width: 3
+            });
+            var style = new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 8
+                }),
+                fill: fill,
+                stroke: stroke
+            });
+            var format = new ol.format.WKT();
+            //var feature = format.readFeature('POLYGON ((-10000 -10000, 10000 -10000, 10000 10000, -10000 10000, -10000 -10000 ))');
+
+
+            var vector = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: []
+                })
+            });
+            vector.setStyle(style);
+            var projection = new ol.proj.Projection({
+                code: 'EPSG:3857',
+                units: 'm'
+            });
+            var layers = [
+                vector
+            ];
+            var map = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers,
+                target: 'map',
+                view: new ol.View({
+                    projection: projection,
+                    center: [50000, 50000],
+                    zoom: 10
+                })
+            });
+            //var mousePositionControl = new ol.control.MousePosition({
+            //    coordinateFormat: ol.coordinate.createStringXY(4),
+            //    projection: 'EPSG:3857',
+                // comment the following two lines to have the mouse position
+                // be placed within the map.
+             //   className: 'custom-mouse-position',
+            //    target: document.getElementById('mouse-position'),
+            //    undefinedHTML: '&nbsp;'
+            //});
+
+
+            map.addControl(mousePositionControl);
+
+
+            function loadProfile() {
+
+               
+
+                var file = document.getElementById('file').files[0];
+
+                var reader = new FileReader();
+                reader.onload = function (progressEvent) {
+                   
+
+                    
+                    var first_part = this.result.substring(0, 1000);
+                    var first_part_low = first_part.toLowerCase();
+                    var lines = first_part_low.split("nodata")[0];
+                    var resolution = lines.split("cellsize");
+                    
+                    document.getElementById('mouse-position').innerHTML = "Spatial Resolution : " + resolution[1];
+                    //for (var line = 0; line < lines.length; line++) {
+                    //    
+                    //}    
+                };
+                reader.readAsText(file);
+            }
+
+
+
+        </script>
+
+    </body>
+</html>
