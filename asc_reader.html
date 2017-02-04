@@ -107,12 +107,18 @@
                    
 
                     
-                    var first_part = this.result.substring(0, 1000);
+                    var first_part = this.result;
                     var first_part_low = first_part.toLowerCase();
-                    var lines = first_part_low.split("nodata")[0];
-                    var resolution = lines.split("cellsize");
+                    var nodata = first_part_low.split('nodata_value');
+                    var nodatavalue = nodata[1];
+                    var nodata = nodatavalue.trim().split("\n")[0];
+                    var werte = nodatavalue.trim().split("\n")[1];
                     
-                    document.getElementById('mouse-position').innerHTML = "Spatial Resolution : " + resolution[1];
+                    
+                    //var nodatavalue_liste = nodatavalue.split(" ");
+                    //var resolution = nodata[0].split("cellsize");
+                    
+                    document.getElementById('mouse-position').innerHTML = "NO_DATA : " + nodata ;
                     //for (var line = 0; line < lines.length; line++) {
                     //    
                     //}    
