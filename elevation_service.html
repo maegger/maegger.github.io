@@ -27,6 +27,7 @@
         <div id="map"></div><br>
     &nbsp;&nbsp;Webseitenbetreuung durch Manfred Egger.  Web: <a href="https://www.egger-gis.at">https://www.egger-gis.at </a>. Hosting durch: <a href="https://github.com/">https://github.com/ </a>
     <script>
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
@@ -34,20 +35,28 @@ function initMap() {
     mapTypeId: 'satellite'
   });
   var elevator = new google.maps.ElevationService;
-  var infowindow = new google.maps.InfoWindow({map: map});
+  
 
   // Add a listener for the click event. Display the elevation for the LatLng of
   // the click inside the infowindow.
   map.addListener('click', function(event) {
+
+
+	var infowindow = new google.maps.InfoWindow({map: map});
+
+
     displayLocationElevation(event.latLng, elevator, infowindow);
   });
+
 }
 
 function displayLocationElevation(location, elevator, infowindow) {
+
   // Initiate the location request
   elevator.getElevationForLocations({
     'locations': [location]
   }, function(results, status) {
+    
     infowindow.setPosition(location);
     if (status === google.maps.ElevationStatus.OK) {
       // Retrieve the first result
@@ -82,3 +91,4 @@ function displayLocationElevation(location, elevator, infowindow) {
         async defer></script>
   </body>
 </html>
+
