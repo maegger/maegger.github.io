@@ -27,7 +27,7 @@
         <div id="map"></div><br>
     &nbsp;&nbsp;Webseitenbetreuung durch Manfred Egger.  Web: <a href="https://www.egger-gis.at">https://www.egger-gis.at </a>. Hosting durch: <a href="https://github.com/">https://github.com/ </a>
     <script>
-
+var infowindow = null;
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
@@ -41,14 +41,20 @@ function initMap() {
   // the click inside the infowindow.
   map.addListener('click', function(event) {
 
+ if (infowindow) {
+        infowindow.close();
+    }
 
-	var infowindow = new google.maps.InfoWindow({map: map});
+	infowindow = new google.maps.InfoWindow({map: map});
 
 
     displayLocationElevation(event.latLng, elevator, infowindow);
   });
 
 }
+
+
+
 
 function displayLocationElevation(location, elevator, infowindow) {
 
