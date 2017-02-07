@@ -30,7 +30,7 @@
         <form> 
             <input type="file" name="file" lang=""  id="file" onchange="loadProfile()" /> <br><br>
         </form> <br> 
-        
+
         <div id="mouse-position"></div><br>
         <div  id="map" class="map"></div>
 
@@ -38,56 +38,56 @@
         <script>
 
             var fill = new ol.style.Fill({
-                color: [180, 0, 0, 0.0]
+            color: [180, 0, 0, 0.0]
             });
             var stroke = new ol.style.Stroke({
-                color: [180, 0, 0, 0.9],
-                width: 3
+            color: [180, 0, 0, 0.9],
+            width: 3
             });
             var style = new ol.style.Style({
-                image: new ol.style.Circle({
-                    fill: fill,
-                    stroke: stroke,
-                    radius: 8
-                }),
-                fill: fill,
-                stroke: stroke
+            image: new ol.style.Circle({
+            fill: fill,
+            stroke: stroke,
+            radius: 8
+            }),
+            fill: fill,
+            stroke: stroke
             });
             var format = new ol.format.WKT();
             //var feature = format.readFeature('POLYGON ((-10000 -10000, 10000 -10000, 10000 10000, -10000 10000, -10000 -10000 ))');
 
 
             var vector = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                    features: []
-                })
+            source: new ol.source.Vector({
+            features: []
+            })
             });
             vector.setStyle(style);
             var projection = new ol.proj.Projection({
-                code: 'EPSG:3857',
-                units: 'm'
+            code: 'EPSG:3857',
+            units: 'm'
             });
             var layers = [
-                vector
+            vector
             ];
             var map = new ol.Map({
-                controls: ol.control.defaults().extend([
-                    new ol.control.ScaleLine()
-                ]),
-                layers: layers,
-                target: 'map',
-                view: new ol.View({
-                    projection: projection,
-                    center: [50000, 50000],
-                    zoom: 10
-                })
+            controls: ol.control.defaults().extend([
+            new ol.control.ScaleLine()
+            ]),
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+            projection: projection,
+            center: [50000, 50000],
+            zoom: 10
+            })
             });
             //var mousePositionControl = new ol.control.MousePosition({
             //    coordinateFormat: ol.coordinate.createStringXY(4),
             //    projection: 'EPSG:3857',
-                // comment the following two lines to have the mouse position
-                // be placed within the map.
-             //   className: 'custom-mouse-position',
+            // comment the following two lines to have the mouse position
+            // be placed within the map.
+            //   className: 'custom-mouse-position',
             //    target: document.getElementById('mouse-position'),
             //    undefinedHTML: '&nbsp;'
             //});
@@ -98,32 +98,53 @@
 
             function loadProfile() {
 
+
+
+            var file = document.getElementById('file').files[0];
+
+            var reader = new FileReader();
+            reader.onload = function (progressEvent) {
+
+
+
+            var first_part = this.result;
+            var first_part_low = first_part.toLowerCase();
+            var nodata = first_part_low.split('nodata_value');
+            var nodatavalue = nodata[1]
+            var first_part_values = nodata[0];
+            var size = first_part_values.split("cellsize")[1].trim();
+            var ncols = first_part_values.split("nrows")[0].split("ncols")[1].trim();
+            var nrows = first_part_values.split("x")[0].split("nrows")[1].trim();
+            var xu = first_part_values.split("y")[0].split("corner")[1].trim();
+            var yu = first_part_values.split("cellsize")[0].split("corner")[2].trim();
+            //alert(ncols + " " + nrows + " " + xu+ " " + yu  + " " + size);
+            width = ncols * size;
+            height = nrows * size;
+            var nodata = nodatavalue.trim().split("\n")[0];
+            var werte = nodatavalue.trim().split("\n")[1];
+            olf = (Number(yu) +Number(height));
+            xr = Number(xu)  +width;
+            wkt = "POLYGON((" + xu + " " + yu + ","+xu +" " +  olf+" , " + xr + " " + olf  +", "+ xr  + " "+yu +" , "+ xu + " " + yu + "))";
                
-
-                var file = document.getElementById('file').files[0];
-
-                var reader = new FileReader();
-                reader.onload = function (progressEvent) {
-                   
-
-                    
-                    var first_part = this.result;
-                    var first_part_low = first_part.toLowerCase();
-                    var nodata = first_part_low.split('nodata_value');
-                    var nodatavalue = nodata[1];
-                    var nodata = nodatavalue.trim().split("\n")[0];
-                    var werte = nodatavalue.trim().split("\n")[1];
-                    
-                    
-                    //var nodatavalue_liste = nodatavalue.split(" ");
-                    //var resolution = nodata[0].split("cellsize");
-                    
-                    document.getElementById('mouse-position').innerHTML = "NO_DATA : " + nodata ;
-                    //for (var line = 0; line < lines.length; line++) {
-                    //    
-                    //}    
-                };
-                reader.readAsText(file);
+            //var nodatavalue_liste = nodatavalue.split(" ");
+            //var resolution = nodata[0].split("cellsize");
+                                var format = new ol.format.WKT();
+                    var feature = format.readFeature(wkt);
+                    var vector_profil = new ol.layer.Vector({
+                        source: new ol.source.Vector({
+                            features: [feature]
+                        })
+                    });
+                    vector_profil.setStyle(style);
+                    map.addLayer(vector_profil);
+                     var extent = vector_profil.getSource().getExtent();
+                    map.getView().fit(extent, map.getSize());
+            
+            //for (var line = 0; line < lines.length; line++) {
+            //    
+            //}    
+            };
+            reader.readAsText(file);
             }
 
 
