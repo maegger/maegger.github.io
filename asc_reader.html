@@ -110,13 +110,19 @@
             var first_part = this.result;
             var first_part_low = first_part.toLowerCase();
             var nodata = first_part_low.split('nodata_value');
+		var asc_type = "center";
+                 if (first_part_low.indexOf(asc_type) < 0) {
+
+               
+                    asc_type = "corner";
+                }
             var nodatavalue = nodata[1]
             var first_part_values = nodata[0];
             var size = first_part_values.split("cellsize")[1].trim();
             var ncols = first_part_values.split("nrows")[0].split("ncols")[1].trim();
             var nrows = first_part_values.split("x")[0].split("nrows")[1].trim();
-            var xu = first_part_values.split("y")[0].split("corner")[1].trim();
-            var yu = first_part_values.split("cellsize")[0].split("corner")[2].trim();
+            var xu = first_part_values.split("y")[0].split(asc_type)[1].trim();
+            var yu = first_part_values.split("cellsize")[0].split(asc_type)[2].trim();
             //alert(ncols + " " + nrows + " " + xu+ " " + yu  + " " + size);
             width = ncols * size;
             height = nrows * size;
