@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Map of East Tyrol</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
+            }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+               padding-left: 3px;
+                padding-right: 3px;
+                
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1>Map of East Tyrol</h1>
+        <div id="z"> Click into the map to get the elevation value of your point of interest... </div><br>
+
+            <div id="map" class="map" style="width: 100%" ></div><br>
+        Data sources: <br>Land Tirol - data.tirol.gv.at / <a href="https://basemap.at">basemap.at</a> <br>Info: Elevation values are basing on a DEM with a spatial resolution of 10 m.<br><br>More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+        <br> 
+        </div>
+        <script>
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+            ]),
+            target: 'map',
+            view: new ol.View({
+            center: [1396605, 5927203],
+            zoom: 10
+            })
+            });
+
+            $.ajax(capabilitiesUrl).then(function(response) {
+            var result = new ol.format.WMTSCapabilities().read(response);
+            var options = ol.source.WMTS.optionsFromCapabilities(result, {
+            layer: layer,
+            matrixSet: 'google3857',
+            requestEncoding: 'REST',
+            style: 'normal'
+            });
+            options.tilePixelRatio = tilePixelRatio;
+            map.addLayer(new ol.layer.Tile({
+            source: new ol.source.WMTS(options)
+            }));
+            });
+            map.on('click', function(evt) {
+                nodata = false;
+            var coord = evt.coordinate;
+            var new_coord = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+            Proj4js.defs["EPSG:31255"] = "+proj=tmerc +lat_0=0 +lon_0=13.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_def";
+            // creating source and destination Proj4js objects
+// once initialized, these may be re-used as often as needed
+            var source = new Proj4js.Proj('EPSG:4326'); //source coordinates will be in Longitude/Latitude
+            var dest = new Proj4js.Proj('EPSG:31255'); //destination coordinates in LCC, south of France
+
+
+
+// transforming point coordinates
+
+            var p = new Proj4js.Point(new_coord[0], new_coord[1]); //any object will do as long as it has 'x' and 'y' properties
+            Proj4js.transform(source, dest, p);
+            var x = p.x;
+            var mod_x = x % 5;
+            //var mod_x = parseFloat( mod_x_st )  ;
+            var raster_x = x - mod_x;
+            var mod_testx = raster_x % 10;
+            if (mod_testx === 0) {
+            raster_x = raster_x - 5;
+            } else {
+            raster_x = raster_x - 10
+            }
+            var y = p.y;
+            var mod_y = y % 5;
+            var raster_y = y - mod_y;
+            var mod_testy = raster_y % 10;
+            if (mod_testy == 0) {
+            raster_y = raster_y - 5;
+            }
+
+            var txtFile = new XMLHttpRequest();
+            txtFile.open("GET", "https://raw.githubusercontent.com/maegger/dgm_osttirol/master/" + raster_y + ".txt", true);
+            txtFile.onreadystatechange = function () {
+            if (txtFile.readyState === 4) {
+                
+            // Makes sure the document is ready to parse.
+            if (txtFile.status === 200) {
+            // Makes sure it's found the file.
+                inhalt = txtFile.responseText;
+                liste = inhalt.split("\n");
+                var arrayLength = liste.length;
+            //alert(arrayLength);
+                var len = raster_x + "";
+                for (var i = 0; i < arrayLength; i++) {
+                    var zeile = liste[i];
+                    var res = zeile.substring(0, len.length);
+            //var part = zeile.substring( 0, len );
+
+                    if (res === len){
+                        var hoe = Math.round(zeile.split(" ")[1] * 100) / 100;
+                        document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
+            
+            //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                        break;
+                    } else {
+                        document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+            
+                    }
+                } 
+                }else {
+                document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+                
+            }
+            
+            }
+            }
+
+            txtFile.send(null);
+            });
+
+            
+
+
+           
+
+        </script>
+    </body>
+</html>
