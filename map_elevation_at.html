@@ -72,7 +72,7 @@
             // HiDPI support:
             // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
             // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
-            var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
             var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
             var tilePixelRatio = hiDPI ? 2 : 1;
 
@@ -93,7 +93,7 @@
                     layer: layer,
                     matrixSet: 'google3857',
                     requestEncoding: 'REST',
-                    style: 'normal'
+                    style: 'bmaporthofoto30cm'
                 });
                 options.tilePixelRatio = tilePixelRatio;
 
