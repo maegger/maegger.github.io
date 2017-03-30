@@ -156,13 +156,13 @@
                                     var hoe = Math.round(zeile.split(" ")[1]);
                                     var klasse = 'keine H&ouml;henzulage'
                                     if (hoe > 1500 && hoe < 1800) {
-                                        klasse = 'H&ouml;henzulage ab 1.500 m (€ 1,112)'
+                                        klasse = 'H&ouml;henzulage ab 1.500 m (&#8364; 1,112)'
                                     }
                                     if (hoe > 1800 && hoe < 2500) {
-                                        klasse = 'H&ouml;henzulage ab 1.800 m (€ 1,652)'
+                                        klasse = 'H&ouml;henzulage ab 1.800 m (&#8364; 1,652)'
                                     }
                                     if (hoe > 2500) {
-                                        klasse = 'H&ouml;henzulage ab 2.500 m (€ 1,809)'
+                                        klasse = 'H&ouml;henzulage ab 2.500 m (&#8364; 1,809)'
                                     }
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m<br><br>" +klasse;
