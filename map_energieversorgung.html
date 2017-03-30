@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Höhenzulage Kollektivvertrag Elektrizitätsversorgungsunternehmungen</title>
+        <title>H&ouml;henzulage Kollektivvertrag Elektrizit&auml;tsversorgungsunternehmungen</title>
         <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -32,12 +32,12 @@
     </head>
     <body >
         <div style="height: 85%;width: 100%">
-            <h1>Höhenzulage Kollektivvertrag Elektrizitätsversorgungsunternehmungen</h1>
-            <div id="z"> Drücken Sie in die Karte um eine Auskunft über Ihre Höhenzulage zu erhalten... </div><br>
+            <h1>H&ouml;henzulage Kollektivvertrag Elektrizit&auml;tsversorgungsunternehmungen</h1>
+            <div id="z"> Drücken Sie in die Karte um eine Auskunft über Ihre H&ouml;henzulage zu erhalten... </div><br>
 
             <div id="map" class="map" style="width: 100%" ></div><br>Für die Richtigkeit und Anwendbarkeit der Ergebnisse wird keine Garantie oder Haftung übernommen.<br>
-            Achtung: Die Höhendaten basieren auf einem Geländemodel mit 10 m Auflösung und sind auf Ganzzahlen gerundet. Für Detailfragen nutzen Sie die Geodatendienste der Bundesländer. 
-            Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Kollektivvertrag Elektrizitätsversorgungsunternehmungen (Stand 2017)  <br><br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+            Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Für Detailfragen nutzen Sie die Geodatendienste der Bundesl&auml;nder. 
+            Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Kollektivvertrag Elektrizit&auml;tsversorgungsunternehmungen (Stand 2017)  <br><br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
             <br> 
         </div>
         <script>
@@ -154,28 +154,28 @@
 
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1]);
-                                    var klasse = 'keine Höhenzulage'
+                                    var klasse = 'keine H&ouml;henzulage'
                                     if (hoe > 1500 && hoe < 1800) {
-                                        klasse = 'Höhenzulage ab 1.500 m (€ 1,112)'
+                                        klasse = 'H&ouml;henzulage ab 1.500 m (€ 1,112)'
                                     }
                                     if (hoe > 1800 && hoe < 2500) {
-                                        klasse = 'Höhenzulage ab 1.800 m (€ 1,652)'
+                                        klasse = 'H&ouml;henzulage ab 1.800 m (€ 1,652)'
                                     }
                                     if (hoe > 2500) {
-                                        klasse = 'Höhenzulage ab 2.500 m (€ 1,809)'
+                                        klasse = 'H&ouml;henzulage ab 2.500 m (€ 1,809)'
                                     }
 
-                                    document.getElementById("z").innerHTML = "Seehöhe: " + hoe + " m<br><br>" +klasse;
+                                    document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m<br><br>" +klasse;
 
                                     //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
-                                    document.getElementById("z").innerHTML = "Derzeit keine Höhendaten an dieser Stelle vorhanden...";
+                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden...";
 
                                 }
                             }
                         } else {
-                            document.getElementById("z").innerHTML = "Derzeit keine Höhendaten an dieser Stelle vorhanden...";
+                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden...";
 
                         }
 
