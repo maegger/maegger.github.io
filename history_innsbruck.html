@@ -11,8 +11,8 @@
 
 
             body, html {
-                height: 90%;
-                width: 90%;
+                height: 100%;
+                width: 100%;
             }
             * {
                 font-family:  Arial, Helvetica, sans-serif;
@@ -26,13 +26,20 @@
         </style>
     </head>
     <body>
-        <h1>Historischer Vergleich Innsbruck 1946 und heute</h1>
+        <h2>Historische Entwicklung von Innsbruck und den Marthadörfern von 1946 bis heute</h2>
         
-        <div  id="map1" style="width: 60%;" class="map"></div>
+        <div  id="map1" style="position: absolute;   
+       height: 600px; width: 420px;    
+       left: 9px; top: 150px;" class="map"></div>
 
 
-<div  id="map2" style="width: 60%;" class="map"></div>
-        Datenquelle: Land Tirol - data.tirol.gv.at. More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+<div  id="map2" style="position: absolute;   
+       height: 600px; width: 420px;    
+       left: 460px; top: 150px;" class="map"></div>
+        <div style="text-align: left;
+position: fixed;
+bottom: 0;
+left:5px;">Datenquelle: Land Tirol - data.tirol.gv.at. More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a></div>
         <script>
             
             var projection = new ol.proj.Projection({
@@ -74,7 +81,7 @@ var layers2 = [
                     view: new ol.View({
                     projection: projection,
                             center: [1270565, 5986946],
-                            zoom: 15
+                            zoom: 12
                     })
             });
             
@@ -87,7 +94,7 @@ var layers2 = [
                     view: new ol.View({
                     projection: projection,
                             center: [1270565, 5986946],
-                            zoom: 15
+                            zoom: 12
                     })
             });
 function onMoveEndmap1(evt) {
