@@ -31,16 +31,23 @@
         </style>
     </head>
     <body >
-        <div style="height: 45%;width: 100%">
+        <div >
             <h1>Abfragehilfe H&ouml;henpauschale nach RGV</h1>
             <div id="z">Navigieren Sie zum h&ouml;chsten Punkt Ihrer Dienstreise und dr&uuml;cken Sie in die Karte um eine Auskunft &uuml;ber Ihre H&ouml;henpauschale zu erhalten... </div><br>
 
-            <div id="map1" class="map"  ></div>
-<div id="map2" class="map"  ></div><br>F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse wird keine Garantie oder Haftung &uuml;bernommen.<br>
+            <div id="map1" style="position: absolute;   
+              height: 600px; width: 500px;    
+              left: 9px; top: 100px;" class="map"  ></div>
+<div id="map2" style="position: absolute;   
+              height: 600px; width: 500px;    
+              left: 509px; top: 100px;" class="map"  ></div></div><br><div style="text-align: left;
+             position: fixed;
+             bottom: 0;
+             left:5px;">F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse wird keine Garantie oder Haftung &uuml;bernommen.<br>
             Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. F&uuml;r Detailfragen nutzen Sie die Geodatendienste der Bundesl&auml;nder. 
             <br>Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Reisegeb&uuml;hrenvorschrift 1955 (Stand 2017)  <br><br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
             <br> 
-        </div>
+              </div>
         <script>
             
             var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
@@ -175,15 +182,15 @@ var layer2 = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" +klasse;
 
-                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
-                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden... An der Fertigstellung eines landesweiten kostenlosen H&ouml;hendatendienstes derzeit gearbeitet.";
+                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
 
                                 }
                             }
                         } else {
-                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden... An der Fertigstellung eines landesweiten kostenlosen H&ouml;hendatendienstes wird gearbeitet.";
+                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
 
                         }
 
@@ -259,15 +266,15 @@ map2.on('click', function (evt) {
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" +klasse;
 
-                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
-                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden... An der Fertigstellung eines landesweiten kostenlosen H&ouml;hendatendienstes derzeit gearbeitet.";
+                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at.";
 
                                 }
                             }
                         } else {
-                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden... An der Fertigstellung eines landesweiten kostenlosen H&ouml;hendatendienstes wird gearbeitet.";
+                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at.";
 
                         }
 
