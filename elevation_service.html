@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Abfragehilfe H&ouml;henpauschale nach RGV</title>
@@ -11,7 +11,7 @@
         <style>
             .map {
                 background: white;
-                height: 80%;
+                height: 65%;
                 width: 100%;
             }
 
@@ -36,10 +36,10 @@
             <div id="z">Navigieren Sie zum h&ouml;chsten Punkt Ihrer Dienstreise und dr&uuml;cken Sie in die Karte um eine Auskunft &uuml;ber Ihre H&ouml;henpauschale zu erhalten... </div><br>
 
             <div id="map1" style="position: absolute;   
-              height: 600px; width: 500px;    
+               width: 500px;    
               left: 9px; top: 100px;" class="map"  ></div>
 <div id="map2" style="position: absolute;   
-              height: 600px; width: 500px;    
+               width: 500px;    
               left: 509px; top: 100px;" class="map"  ></div></div><br><div style="text-align: left;
              position: fixed;
              bottom: 0;
@@ -182,7 +182,7 @@ var layer2 = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" +klasse;
 
-                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
                                     document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
@@ -266,7 +266,7 @@ map2.on('click', function (evt) {
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" +klasse;
 
-                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
                                     document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at.";
