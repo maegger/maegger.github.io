@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Download Bemessungsniederschlag ZEMOKOST</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <style>
+
+
+           
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Download Bemessungsniederschlag ZEMOKOST</h1>
+        <form>
+            <p>W&auml;hlen Sie zuerst den TYP des Bemessungsniederschlags aus:</p>
+            <fieldset >
+                <input type="radio"  id="mc" name="Zahlmethode" value="MaxModN" checked onclick="removepoint();">
+                <label for="mc"> MaxModN</label>
+                <input type="radio" id="vi" name="Zahlmethode" value="Bemessung" onclick="removepoint();">
+                <label for="vi"> Bemessung</label>
+                <input type="radio" id="ae" name="Zahlmethode" value="ÖKOSTRA" onclick="removepoint();">
+                <label for="ae"> &Ouml;KOSTRA</label> 
+            </fieldset>
+        </form>
+        <br>
+        <div id="gitterpunkt"> Nun k&ouml;nnen Sie mit aus Karte einen Punkt ausw&auml;hlen... Je nach TYP wird ein Downloadlink generiert.<br></div>
+        <br>
+        <div id="map" class="map" style="width: 100%;height: 60%;" ></div>ACHTUNG: Diese Seite dient als Fallbeispiel f&uuml;r eine frei zug&auml;ngliche GIS-Spezialanwendung im Bereich Naturgefahrenmanagement. Die Richtigkeit der Daten kann derzeit nicht garantiert werden.&nbsp;
+        Quelle der Grundlagendaten: Copyright BMLFUW &nbsp; <a href="http://ehyd.gv.at/">(http://ehyd.gv.at/)</a> , Dezember 2016. Eine Aktualisierung erfolgt derzeit nicht.
+        <br><br> Copyright: Manfred Egger, 2016. Web: <a href="http://www.egger-gis.at">http://www.egger-gis.at </a>  
+        <script>
+            var vectorSource = new ol.source.Vector({});
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({
+                target: 'map',
+                view: new ol.View({
+                    center: [1537897, 6039579],
+                    zoom: 7
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'bmaporthofoto30cm'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+                map.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map.addLayer(new ol.layer.Vector({
+                    source: vectorSource
+                }));
+            });
+
+            var select_interaction = new ol.interaction.Select();
+            var feature;
+            select_interaction.getFeatures().on("add", function (e) {
+
+                document.getElementById('gitterpunkt').innerHTML = "";
+                feature = e.element; //the feature selected
+                if (document.getElementById("mc").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php?type=maxmodn&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(MaxModN) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/maxmodn/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(MaxModN) </a></b><br>";
+                }
+
+                if (document.getElementById("vi").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php?type=bemessung&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/bemessung/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                }
+
+                if (document.getElementById("ae").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php?type=oekostra&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/oekostra/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
+                }
+
+
+
+            });
+
+            map.addInteraction(select_interaction);
+
+            var request = new XMLHttpRequest();
+            request.open('GET', 'https://raw.githubusercontent.com/maegger/CheckAustrianProjectionDatabase/master/liste.txt', true);
+            request.send(null);
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    var type = request.getResponseHeader('Content-Type');
+                    if (type.indexOf("text") !== 1) {
+                        inhalt = request.responseText;
+                        liste = inhalt.split("\n");
+
+                        for (var i = 0; i < liste.length; i++) {
+
+                            var x = parseFloat(liste[i].split(";")[1]);
+
+                            var y = parseFloat(liste[i].split(";")[2]);
+
+                            var name = liste[i].split(";")[0];
+
+                            var thing = new ol.geom.Point(ol.proj.transform([x, y], 'EPSG:4326', 'EPSG:3857'));
+
+
+                            var featurething = new ol.Feature({
+                                name: name,
+                                geometry: thing
+                            });
+                            vectorSource.addFeature(featurething);
+
+                        }
+                    }
+                }
+            }
+            function removepoint() {
+                document.getElementById('gitterpunkt').innerHTML = "";
+                if (document.getElementById("mc").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php/download.php?type=maxmodn&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(MaxModN) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/maxmodn/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(MaxModN) </a></b><br>";
+                }
+                if (document.getElementById("vi").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php?type=bemessung&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/bemessung/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(Bemessung) </a></b><br>";
+                }
+                if (document.getElementById("ae").checked == true) {
+                    document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"http://egger-gis.000webhostapp.com/download.php?type=oekostra&nr=" + feature.get("name") + "\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
+                    //document.getElementById('gitterpunkt').innerHTML = "<b><a href=\"https://raw.githubusercontent.com/maegger/ehyd-db/master/oekostra/" + feature.get("name") + ".csv\" > DOWNLOADLINK zu Punkt " + feature.get("name") + "&nbsp;(&Ouml;KOSTRA) </a></b><br>";
+                }
+            }
+        </script>
+    </body>
+</html>
