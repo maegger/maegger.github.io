@@ -250,18 +250,18 @@ map2.on('click', function (evt) {
 
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1]);
-                                    var klasse = ' P1 bis 1000 m'
-                                    if (hoe > 1000 && hoe < 1600) {
-                                        klasse = ' P2 bis 1.600 m'
+                                    var klasse = ' keine Zulage'
+                                    if (hoe > 800 && hoe < 1201) {
+                                        klasse = ' LOA 204: 800 – 1.200 m'
                                     }
-                                    if (hoe > 1600 && hoe < 2600) {
-                                        klasse = ' P3 bis 2.600 m'
+                                    if (hoe > 1201 && hoe < 1601) {
+                                        klasse = ' LOA 201: 1.201 – 1.600 m'
                                     }
-                                    if (hoe > 2600 && hoe < 3000) {
-                                        klasse = ' P4 bis 3.000 m'
+                                    if (hoe > 1601 && hoe < 2001) {
+                                        klasse = ' LOA 202: 1.601 – 2.000 m'
                                     }
-                                    if (hoe > 3000) {
-                                        klasse = ' P5 &uuml;ber 3.000 m'
+                                    if (hoe > 2001) {
+                                        klasse = ' LOA 203: &uuml;ber 2.000 m'
                                     }
 
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" +klasse;
