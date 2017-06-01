@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script>
+           getAustrianElevation = function (x, y) {
+
+    nodata = false;
+    var database = "";
+    var mod_x_path = x % 20000;
+    path_x = x - mod_x_path;
+    database = path_x;
+    var mod_y = y % 10;
+    var raster_y = y - mod_y;
+    var mod_x = x % 10;
+    var raster_x = x - mod_x;
+    
+    var elevationFile = new XMLHttpRequest();
+    elevationFile.onreadystatechange = function () {
+        if (elevationFile.readyState === XMLHttpRequest.DONE) {
+            inhalt = elevationFile.responseText;
+            liste = inhalt.split("\n");
+            var arrayLength = liste.length;
+            var len = raster_x + "";
+            for (var i = 0; i < arrayLength; i++) {
+                var zeile = liste[i];
+                var res = zeile.substring(0, len.length);
+                
+                if (res === len) {
+                    seehoehe = Math.round(zeile.split(" ")[1]);
+                    alert("Seehöhe für Punkt (EPSG:3857):  \n\nx: 1380965 \ny: 5937757  " + "\n\n" +seehoehe + " m\n\nACHTUNG: Derzeit kann der Dienst nur für Koordinanten in EPSG: 3857, die korrekte Seehöhe auf 10 m Basis ermitteln. ");
+                    break;
+                }
+            }
+        }
+    }
+    elevationFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+    elevationFile.send();
+}
+        </script>
+    </head>
+    <body>
+
+       <script> 
+		getAustrianElevation(1380965,5937757);
+        </script> 
+        
+        
+    </body>
+</html>
