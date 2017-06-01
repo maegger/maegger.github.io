@@ -8,6 +8,11 @@
         <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
         <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
         <script type="text/javascript" src="proj4js-combined.js"></script>
+	    <script>
+var counter = new XMLHttpRequest();
+counter.open("GET", "http://egger-gis.000webhostapp.com/rgv_counter.php", true);
+    counter.send();
+</script>
         <style>
             .map {
                 background: white;
