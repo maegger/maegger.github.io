@@ -1,50 +1,177 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TEST</title>
-        <script>
-           getAustrianElevation = function (x, y) {
-
-    nodata = false;
-    var database = "";
-    var mod_x_path = x % 20000;
-    path_x = x - mod_x_path;
-    database = path_x;
-    var mod_y = y % 10;
-    var raster_y = y - mod_y;
-    var mod_x = x % 10;
-    var raster_x = x - mod_x;
-    
-    var elevationFile = new XMLHttpRequest();
-    elevationFile.onreadystatechange = function () {
-        if (elevationFile.readyState === XMLHttpRequest.DONE) {
-            inhalt = elevationFile.responseText;
-            liste = inhalt.split("\n");
-            var arrayLength = liste.length;
-            var len = raster_x + "";
-            for (var i = 0; i < arrayLength; i++) {
-                var zeile = liste[i];
-                var res = zeile.substring(0, len.length);
-                
-                if (res === len) {
-                    seehoehe = Math.round(zeile.split(" ")[1]);
-                    alert("Seehoehe fuer Punkt (EPSG:3857):  \n\nx: 1380965 \ny: 5937757  " + "\n\n" +seehoehe + " m\n\nACHTUNG: Derzeit kann der Dienst nur fuer Koordinanten in EPSG: 3857, die korrekte Seehoehe auf 10 m Basis ermitteln. ");
-                    break;
-                }
+        <title>&Ouml;sterreichischer H&ouml;hendatendienst (10 m)</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
             }
-        }
-    }
-    elevationFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
-    elevationFile.send();
-}
-        </script>
-    </head>
-    <body>
 
-       <script> 
-		getAustrianElevation(1380965,5937757);
-        </script> 
-        
-        
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1>&Ouml;sterreichischer H&ouml;hendatendienst (10 m)</h1>
+            
+            Dieser H&ouml;hendatendienst basierend auf einem Gel&auml;ndemodel mit 10 Meter Aufl&ouml;sung ist bis auf weiteres f&uuml;r jeden Entwickler frei zug&auml;nglich.
+                H&ouml;hendaten sind derzeit nur in West&ouml;sterreich bis knapp zur Ostgrenze von K&auml;rtnen verf&uuml;gbar.<br>Im <a href="https://raw.githubusercontent.com/maegger/maegger.github.io/master/map_elevation_at.html">Quellcode</a> dieser Webseite finden Sie ein Beispiel wie man mit Javascript auf diesen H&ouml;hendatendienst zugreift. 
+<br><br>
+<div id="z">Dr&uuml;cken Sie in die Karte, um einen H&ouml;henwert zu erhalten.</div><br>
+
+            <div id="map" class="map" style="height: 65%" ></div><br>
+            F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. <br><br>Datenquellen: geoland.at / basemap.at
+            <br> 
+        </div>
+        <script>
+            var fill = new ol.style.Fill({
+                color: [180, 0, 0, 0.0]
+            });
+            var stroke = new ol.style.Stroke({
+                color: [180, 0, 0, 0.9],
+                width: 3
+            });
+            var style = new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 8
+                }),
+                fill: fill,
+                stroke: stroke
+            });
+            
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                target: 'map',
+                view: new ol.View({
+                    center: [1521550, 6052959],
+                    zoom: 7
+
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'bmaporthofoto30cm'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+
+                map.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map.addLayer(vector);
+            });
+
+
+            map.on('click', function (evt) {
+                nodata = false;
+                var coord = evt.coordinate;
+
+
+                var x = coord[0];
+
+                var database = "";
+                var mod_x_path = x % 20000;
+                path_x = x - mod_x_path;
+
+                var y = coord[1];
+                //var mod_y_path = y % 25000;
+                //path_y = y - mod_y_path;
+
+                database = path_x ;
+
+
+
+
+
+                var mod_y = y % 10;
+                var raster_y = y - mod_y;
+                
+                var mod_x = x % 10;
+                var raster_x = x - mod_x;
+                
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                //var part = zeile.substring( 0, len );
+                                
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1]);
+                                    document.getElementById("z").innerHTML = "Seeh&ouml;he : " + hoe + " m ";
+
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                } else {
+                                    document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+
+                                }
+                            }
+                        } else {
+                            document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+
+                        }
+
+                    }
+                }
+
+                txtFile.send(null);
+            });
+
+
+
+
+
+
+        </script>
     </body>
 </html>
