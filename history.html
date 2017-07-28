@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.20.0/css/ol.css" type="text/css">
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+        <script src="https://openlayers.org/en/v3.20.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Siedlungsentwicklung Tirol</h1>
+<div   style="position: absolute;   
+              height: 600px; width: 260px;    
+              left: 9px; top: 65px;" >1970-1982:</div>
+        <div  id="map1" style="position: absolute;   
+              height: 500px; width: 260px;    
+              left: 9px; top: 100px;" class="map"></div>
+<div   style="position: absolute;   
+              height: 600px; width: 260px;    
+              left: 300px; top: 65px;" >1999-2004:</div>
+        <div  id="map2" style="position: absolute;   
+              height: 500px; width: 260px;    
+              left: 300px; top: 100px;" class="map"></div>
+              <div   style="position: absolute;   
+              height: 600px; width: 260px;    
+              left: 600px; top: 65px;" >Aktuelles Orthofoto:</div>
+        <div  id="map3" style="position: absolute;   
+              height: 500px; width: 260px;    
+              left: 600px; top: 100px;" class="map"></div>
+        <div style="text-align: left;
+             position: fixed;
+             bottom: 0;
+             left:5px;">Datenquelle: Land Tirol - data.tirol.gv.at. Copyright: Manfred Egger, 2017.  Hosting by: <a href="https://github.com/">https://github.com/</a></div>
+        <script>
+
+            var projection = new ol.proj.Projection({
+                code: 'EPSG:3857',
+                units: 'm'
+            });
+            var layers1 = [
+                new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+                        crossOrigin: 'anonymous',
+                        params: {
+                            'LAYERS': 'Image_1970-1982'
+
+                        }
+                    })
+                })
+
+            ];
+            var layers2 = [
+                new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+                        crossOrigin: 'anonymous',
+                        params: {
+                            'LAYERS': 'Image_1999-2004'
+
+                        }
+                    })
+                })
+
+            ];
+            var layers3 = [
+                new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+                        crossOrigin: 'anonymous',
+                        params: {
+                            'LAYERS': 'Image_Aktuell_RGB'
+
+                        }
+                    })
+                })
+
+            ];
+            var map1 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers1,
+                target: 'map1',
+                view: new ol.View({
+                    projection: projection,
+                    center: [1262565, 5986946],
+                    zoom: 7
+                })
+            });
+            var map2 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers2,
+                target: 'map2',
+                view: new ol.View({
+                    projection: projection,
+                    center: [1262565, 5986946],
+                    zoom: 7
+                })
+            });
+            var map3 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers3,
+                target: 'map3',
+                view: new ol.View({
+                    projection: projection,
+                    center: [1262565, 5986946],
+                    zoom: 7
+                })
+            });
+            function onMoveEndmap1(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map1.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map1.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map1.getSize());
+                map1.getView().setZoom(zo);
+            }
+            function onMoveEndmap2(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map2.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map2.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map2.getSize());
+                map1.getView().setZoom(zo);
+
+            }
+
+            function onMoveEndmap3(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map3.getSize());
+                var zo = map.getView().getZoom();
+                map1.getView().fit(extent, map3.getSize());
+                map1.getView().setZoom(zo);
+                map2.getView().fit(extent, map3.getSize());
+                map2.getView().setZoom(zo);
+
+            }
+            map1.on('moveend', onMoveEndmap1);
+            map2.on('moveend', onMoveEndmap2);
+            map3.on('moveend', onMoveEndmap3);
+        </script>
+    </body>
+</html>
