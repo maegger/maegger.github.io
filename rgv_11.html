@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>&Ouml;sterreichischer H&ouml;hendatendienst (10 m)</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
+            }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1>Höhenmeterbasiertes Fuß-Kilometergeld nach RGV § 11</h1>
+            
+          <input type="radio" selected id="mc" name="Zahlmethode" value="Seeh&ouml;he Ausgangspunkt (m): ">
+    <label for="mc"> Seeh&ouml;he Ausgangspunkt (m):</label><input id="unten" type="text"></><br> 
+    <input type="radio" id="vi" name="Zahlmethode" value="Seeh&ouml;he Endpunkt (m): ">
+    <label for="vi"> Seeh&ouml;he Endpunkt (m): </label><input id="oben" type="text"></><br> 
+<br>
+ <button type="button" onclick="kilometer()">Fuß-Kilometergeld berechnen</button> <br><br>
+<div id="z">Ermitteln Sie zuerst die Seeh&oumlhe für den Ausgangs- und Endpunkt Ihrer Fußstrecke...Klicken Sie entweder in die Karte oder geben Sie die Seehöhe mit der Hand in die vorgesehenen Felder ein. </div><br>
+ <script type="text/javascript">
+
+
+function kilometer() {
+  var wert1 = document.getElementById("unten").value;
+var wert2 = document.getElementById("oben").value;
+
+var diff = wert2 - wert1;
+
+var kilometer = (diff*2)/75;
+
+document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zweimal " + diff + " Höhenmeter zu Fuß bewältigt. " + "Basierend auf Ihren Angaben beträgt das Fußkilometergeld € " + (Math.round((kilometer*0.38) * 100) / 100);
+
+}
+
+
+</script>
+            <div id="map" class="map" style="height: 65%" ></div><br>
+            F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Datenquellen: geoland.at / basemap.at
+            <br> 
+        </div>
+        <script>
+            var fill = new ol.style.Fill({
+                color: [180, 0, 0, 0.0]
+            });
+            var stroke = new ol.style.Stroke({
+                color: [180, 0, 0, 0.9],
+                width: 3
+            });
+            var style = new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 8
+                }),
+                fill: fill,
+                stroke: stroke
+            });
+            
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                target: 'map',
+                view: new ol.View({
+                    center: [1521550, 6052959],
+                    zoom: 7
+
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'bmaporthofoto30cm'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+
+                map.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map.addLayer(vector);
+            });
+
+
+            map.on('click', function (evt) {
+                nodata = false;
+                var coord = evt.coordinate;
+
+
+                var x = coord[0];
+
+                var database = "";
+                var mod_x_path = x % 20000;
+                path_x = x - mod_x_path;
+
+                var y = coord[1];
+                //var mod_y_path = y % 25000;
+                //path_y = y - mod_y_path;
+
+                database = path_x ;
+
+
+
+
+
+                var mod_y = y % 10;
+                var raster_y = y - mod_y;
+                
+                var mod_x = x % 10;
+                var raster_x = x - mod_x;
+                
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                //var part = zeile.substring( 0, len );
+                                
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1]);
+if (document.getElementById("mc").checked){
+
+                                    document.getElementById("unten").value =   hoe;
+} 
+if (document.getElementById("vi").checked){
+document.getElementById("oben").value =   hoe;
+}
+
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                } else {
+                                    //document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+
+                                }
+                            }
+                        } else {
+                            //document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+
+                        }
+
+                    }
+                }
+
+                txtFile.send(null);
+            });
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
