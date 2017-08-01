@@ -90,7 +90,7 @@ document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zwe
             // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
             // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
             var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
-            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var layer = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
             var tilePixelRatio = hiDPI ? 2 : 1;
 
             var map = new ol.Map({controls: ol.control.defaults().extend([
