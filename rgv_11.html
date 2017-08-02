@@ -56,7 +56,7 @@ if (diff < 0){
 
 var kilometer = (diff*2)/75;
 
-document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zweimal " + diff + " Höhenmeter zu Fuß bewältigt. " + "Basierend auf Ihren Angaben beträgt das Fußkilometergeld € " + (Math.round((kilometer*0.38) * 100) / 100);
+document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zweimal " + diff + " Höhenmeter zu Fuß (An- oder Abstieg) bewältigt. " + "Basierend auf Ihren Angaben beträgt das Fußkilometergeld € " + (Math.round((kilometer*0.38) * 100) / 100);
 
 }
 
@@ -181,12 +181,12 @@ document.getElementById("oben").value =   hoe;
                                     //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
-                                    //document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+                                    document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
 
                                 }
                             }
                         } else {
-                            //document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+                            document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
 
                         }
 
