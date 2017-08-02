@@ -173,9 +173,11 @@ document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zwe
 if (document.getElementById("mc").checked){
 
                                     document.getElementById("unten").value =   hoe;
+	document.getElementById("z").innerHTML = "H&ouml;hendaten für Ausgangspunkt erfasst. Erheben Sie bitte noch die Seeh&ouml;he für den Endpunkt.";
 } 
 if (document.getElementById("vi").checked){
 document.getElementById("oben").value =   hoe;
+	document.getElementById("z").innerHTML = "H&ouml;hendaten für Endpunkt erfasst. Wenn Sie bereits die See&oumlhe des Ausgangspunktes eingeben haben, k&ouml;nnen Sie nun das h&ouml;henabhängige Kilometergeld berechnen.;.
 }
 
                                     //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
