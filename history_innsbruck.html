@@ -26,29 +26,39 @@
         </style>
     </head>
     <body>
-        <h1>Siedlungsgeschichte Innsbruck und Marthad&ouml;rfer 1940 bis heute</h1>
+        <h1>Siedlungsentwicklung Innsbruck und Marthadörfer 1865 bis heute</h1>
+
 <div   style="position: absolute;   
-              height: 600px; width: 250px;    
-              left: 9px; top: 65px;" >1940:</div>
-        <div  id="map1" style="position: absolute;   
-              height: 600px; width: 250px;    
+              height: 600px; width: 260px;    
+              left: 9px; top: 65px;" >1865 (nur für Arzl Dorfkern):</div>
+        <div  id="map_old" style="position: absolute;   
+              height: 500px; width: 260px;    
               left: 9px; top: 100px;" class="map"></div>
+
 <div   style="position: absolute;   
-              height: 600px; width: 250px;    
-              left: 300px; top: 65px;" >1970-1982:</div>
+              height: 600px; width: 260px;    
+              left: 310px; top: 65px;" >1940:</div>
+        <div  id="map1" style="position: absolute;   
+              height: 500px; width: 260px;    
+              left: 310px; top: 100px;" class="map"></div>
+
+<div   style="position: absolute;   
+              height: 600px; width: 260px;    
+              left: 600px; top: 65px;" >1970-1982:</div>
         <div  id="map2" style="position: absolute;   
-              height: 600px; width: 250px;    
-              left: 300px; top: 100px;" class="map"></div>
-              <div   style="position: absolute;   
-              height: 600px; width: 250px;    
-              left: 600px; top: 65px;" >Aktuelles Orthofoto:</div>
-        <div  id="map3" style="position: absolute;   
-              height: 600px; width: 250px;    
+              height: 500px; width: 260px;    
               left: 600px; top: 100px;" class="map"></div>
+
+              <div   style="position: absolute;   
+              height: 600px; width: 260px;    
+              left: 900px; top: 65px;" >Aktuelles Orthofoto:</div>
+        <div  id="map3" style="position: absolute;   
+              height: 500px; width: 260px;    
+              left: 900px; top: 100px;" class="map"></div>
         <div style="text-align: left;
              position: fixed;
              bottom: 0;
-             left:5px;">Datenquelle: Land Tirol - data.tirol.gv.at. Kontaktdaten:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a></div>
+             left:5px;">Datenquelle: Land Tirol - data.tirol.gv.at. Copyright: Manfred Egger, 2017.  Hosting by: <a href="https://github.com/">https://github.com/</a></div>
         <script>
 
             var projection = new ol.proj.Projection({
@@ -60,6 +70,7 @@
                     source: new ol.source.TileWMS({
                         url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
                         crossOrigin: 'anonymous',
+
                         params: {
                             'LAYERS': 'Image_1940'
 
@@ -94,17 +105,70 @@
                 })
 
             ];
+
+
+
+
+
+
+
+var extent_kat3 = [1279516.46924001, 5990602.60047752, 1282316.04266634, 5992840.20367759];
+
+var map_old = new ol.Map({
+controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+        layers: [
+         new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+             
+              url: 'https://github.com/maegger/gis-service/raw/master/java/web_1.jpg',
+              projection: projection,
+              imageExtent: [1272203.70509987, 5988301.4478343, 1272986.9166231, 5988824.09795764]
+            })
+          })
+        ],
+        target: 'map_old',
+        view: new ol.View({
+                    projection: projection,
+                    center: [1272898,	5988710],
+                    zoom: 13,
+ 			minZoom: 13,
+maxZoom: 19
+                })
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             var map1 = new ol.Map({
                 controls: ol.control.defaults().extend([
                     new ol.control.ScaleLine()
                 ]),
                 layers: layers1,
-                target: 'map1',
+               target: 'map1',
                 view: new ol.View({
-                    projection: projection,
-                    center: [1272565, 5986946],
-                    zoom: 11
-                })
+                   projection: projection,
+                    center: [1272898,	5988710],
+                   zoom: 13,minZoom: 13,
+maxZoom: 19
+               })
             });
             var map2 = new ol.Map({
                 controls: ol.control.defaults().extend([
@@ -114,8 +178,9 @@
                 target: 'map2',
                 view: new ol.View({
                     projection: projection,
-                    center: [1272565, 5986946],
-                    zoom: 11
+                    center: [1272898,	5988710],
+                    zoom: 13,minZoom: 13,
+maxZoom: 19
                 })
             });
             var map3 = new ol.Map({
@@ -126,10 +191,20 @@
                 target: 'map3',
                 view: new ol.View({
                     projection: projection,
-                    center: [1272565, 5986946],
-                    zoom: 11
+                    center: [1272898,	5988710],
+                    zoom: 13,minZoom: 13,
+maxZoom: 19
                 })
             });
+		function onMoveEndmap(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map_old.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map_old.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map_old.getSize());
+                map1.getView().setZoom(zo);
+            }
             function onMoveEndmap1(evt) {
                 var map = evt.map;
                 var extent = map.getView().calculateExtent(map1.getSize());
@@ -138,6 +213,8 @@
                 map3.getView().setZoom(zo);
                 map1.getView().fit(extent, map1.getSize());
                 map1.getView().setZoom(zo);
+map_old.getView().fit(extent, map1.getSize());
+                map_old.getView().setZoom(zo);
             }
             function onMoveEndmap2(evt) {
                 var map = evt.map;
@@ -147,6 +224,8 @@
                 map3.getView().setZoom(zo);
                 map1.getView().fit(extent, map2.getSize());
                 map1.getView().setZoom(zo);
+map_old.getView().fit(extent, map2.getSize());
+                map_old.getView().setZoom(zo);
 
             }
 
@@ -158,8 +237,11 @@
                 map1.getView().setZoom(zo);
                 map2.getView().fit(extent, map3.getSize());
                 map2.getView().setZoom(zo);
+map_old.getView().fit(extent, map3.getSize());
+                map_old.getView().setZoom(zo);
 
             }
+map_old.on('moveend', onMoveEndmap);
             map1.on('moveend', onMoveEndmap1);
             map2.on('moveend', onMoveEndmap2);
             map3.on('moveend', onMoveEndmap3);
