@@ -127,6 +127,14 @@ controls: ol.control.defaults().extend([
               projection: projection,
               imageExtent: [1270824.08219, 5985966.12269, 1274783.18417, 5989378.20422]
             })
+          }),
+		 new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+             
+              url: 'https://github.com/maegger/gis-service/raw/master/java/flughafen.jpg',
+              projection: projection,
+              imageExtent: [1261387.10693, 5983912.04469, 1264276.39138, 5985509.00768]
+            })
           })
         ],
         target: 'map_old',
