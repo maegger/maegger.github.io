@@ -133,6 +133,13 @@ controls: ol.control.defaults().extend([
               projection: projection,
               imageExtent: [1272787.50587, 5985672.04349, 1274206.34787, 5986624.54414]
             })
+          }),new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+             
+              url: 'https://github.com/maegger/gis-service/raw/master/java/3.jpg',
+              projection: projection,
+              imageExtent: [1271293.29204, 5989660.6234, 1272964.79995, 5990558.32109]
+            })
           })
         ],
         target: 'map_old',
