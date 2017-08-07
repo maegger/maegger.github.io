@@ -26,11 +26,11 @@
         </style>
     </head>
     <body>
-        <h1>Siedlungsentwicklung Innsbruck und Marthad&ouml;rfer 1865 bis heute</h1>
+        <h1>Siedlungsentwicklung Innsbruck und Marthadörfer 1865 bis heute</h1>
 
 <div   style="position: absolute;   
               height: 600px; width: 260px;    
-              left: 9px; top: 65px;" >1865 (derzeit nur f&uuml;r Arzl Dorfkern):</div>
+              left: 9px; top: 65px;" >1865 (nur für Arzl Dorfkern):</div>
         <div  id="map_old" style="position: absolute;   
               height: 500px; width: 260px;    
               left: 9px; top: 100px;" class="map"></div>
@@ -125,6 +125,13 @@ controls: ol.control.defaults().extend([
               url: 'https://github.com/maegger/gis-service/raw/master/java/web_1.jpg',
               projection: projection,
               imageExtent: [1272203.70509987, 5988301.4478343, 1272986.9166231, 5988824.09795764]
+            })
+          }),new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+             
+              url: 'https://github.com/maegger/gis-service/raw/master/java/2.jpg',
+              projection: projection,
+              imageExtent: [1272787.50587, 5985672.04349, 1274206.34787, 5986624.54414]
             })
           })
         ],
