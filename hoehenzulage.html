@@ -11,7 +11,7 @@
         <style>
             .map {
                 background: white;
-                height: 65%;
+                height: 72%;
                 width: 100%;
             }
 
@@ -36,16 +36,16 @@
             <div id="z">&nbsp;&nbsp;Bitte navigieren Sie zu Ihrer Baustelle und drücken Sie dann in die Karte, um Ihre Höhenzulage festzustellen: </div><br>
 
             <div id="map1" style="position: absolute;   
-               width: 810px;    
-              left: 9px; top: 100px;" class="map"  ></div>
+               width: 900px;    
+              left: 0px; top: 93px;" class="map"  ></div>
 <div id="map2" style="position: absolute;   
-               width: 260px;    
-              left: 800px; top: 100px;" class="map"  ></div></div><br><div style="text-align: left;
+               width: 200px;    
+              left: 900px; top: 93px;" class="map"  ></div></div><br><div style="text-align: left;
              position: fixed;
              bottom: 0;
              left:5px;">F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse wird keine Garantie oder Haftung &uuml;bernommen.<br>
             Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. F&uuml;r Detailfragen nutzen Sie die Geodatendienste der Bundesl&auml;nder. 
-            <br>Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Land Tirol - data.tirol.gv.at / Kollektivvertrag für Wildbach- und Lawinenverbauung (Stand 2017)  <br><br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+            <br>Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Land Tirol - data.tirol.gv.at / Kollektivvertrag für Wildbach- und Lawinenverbauung (Stand 2017)  <br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
             <br> 
               </div>
         <script>
@@ -65,7 +65,7 @@
                 target: 'map1',
                 view: new ol.View({
                     center: [1521550, 6052959],
-                    zoom: 6
+                    zoom: 7
 
                 })
             });
@@ -96,7 +96,7 @@ var layer2 = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
                 target: 'map2',
                 view: new ol.View({
                     center: [1521550, 6052959],
-                    zoom: 6
+                    zoom: 7
 
                 })
             });
