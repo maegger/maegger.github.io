@@ -112,33 +112,35 @@
 
 
 
-var extent_kat3 = [1279516.46924001, 5990602.60047752, 1282316.04266634, 5992840.20367759];
+
+var mapExtent = ol.proj.transformExtent([11.381725, 47.261813, 11.420406, 47.283148], 'EPSG:4326', 'EPSG:3857');
+var mapMinZoom = 13;
+var mapMaxZoom = 18;
+var layer = new ol.layer.Tile({
+  extent: mapExtent,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tile'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+var osm = new ol.layer.Tile({
+  source: new ol.source.OSM()
+});
 
 var map_old = new ol.Map({
-controls: ol.control.defaults().extend([
-                    new ol.control.ScaleLine()
-                ]),
-        layers: [
-         
-          new ol.layer.Image({
-            source: new ol.source.ImageStatic({
-             
-              url: 'https://github.com/maegger/gis-service/raw/master/java/arzl.jpg',
-              projection: projection,
-              imageExtent: [1267013.77312, 5984473.76665, 1271285.91685, 5988525.30951]
-            })
-          })
-        ],
-        target: 'map_old',
-        view: new ol.View({
-                    projection: projection,
-                    center: [1272898,	5988710],
-                    zoom: 11,
- 			minZoom: 11,
-maxZoom: 17
-                })
-      });
-
+  target: 'map_old',
+  layers: [
+    osm,
+    layer
+  ],
+  view: new ol.View({
+    center: [1268351,	5986142],
+    zoom: 13
+  })
+});
 
 
 
@@ -166,9 +168,9 @@ maxZoom: 17
                target: 'map1',
                 view: new ol.View({
                    projection: projection,
-                    center: [1272898,	5988710],
-                   zoom: 11,minZoom: 11,
-maxZoom: 17
+                    center: [1268351,	5986142],
+                   zoom: 13,minZoom: 13,
+maxZoom: 18
                })
             });
             var map2 = new ol.Map({
@@ -179,9 +181,9 @@ maxZoom: 17
                 target: 'map2',
                 view: new ol.View({
                     projection: projection,
-                    center: [1272898,	5988710],
-                    zoom: 11,minZoom: 11,
-maxZoom: 17
+                    center: [1268351,	5986142],
+                    zoom: 13,minZoom: 13,
+maxZoom: 18
                 })
             });
             var map3 = new ol.Map({
@@ -192,9 +194,9 @@ maxZoom: 17
                 target: 'map3',
                 view: new ol.View({
                     projection: projection,
-                    center: [1272898,	5988710],
-                    zoom: 11,minZoom: 11,
-maxZoom: 17
+                    center: [1268351,	5986142],
+                    zoom: 13,minZoom: 13,
+maxZoom: 18
                 })
             });
 		function onMoveEndmap(evt) {
