@@ -30,7 +30,7 @@
 
 <div   style="position: absolute;   
               height: 600px; width: 265px;    
-              left: 0px; top: 65px;" >1855 (nur KG Innsbruck):</div>
+              left: 0px; top: 65px;" >1855 (nur KG Innsbruck + Arzl):</div>
         <div  id="map_old" style="position: absolute;   
               height: 550px; width: 300px;    
               left: 0px; top: 100px;" class="map"></div>
@@ -126,6 +126,21 @@ var layer = new ol.layer.Tile({
     maxZoom: mapMaxZoom
   })
 });
+
+var mapExtent4 = ol.proj.transformExtent([11.390723, 47.267568, 11.450679, 47.297298], 'EPSG:4326', 'EPSG:3857');
+
+
+var layer1 = new ol.layer.Tile({
+  extent: mapExtent4,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tilea/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
 var osm = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
@@ -133,11 +148,11 @@ var osm = new ol.layer.Tile({
 var map_old = new ol.Map({
   target: 'map_old',
   layers: [
-    osm,
+    osm,layer1,
     layer
   ],
   view: new ol.View({
-    center: [1268351,	5986142],
+    center: [1270351,	5986142],
     zoom: 13,minZoom: 11
   })
 });
@@ -168,7 +183,7 @@ var map_old = new ol.Map({
                target: 'map1',
                 view: new ol.View({
                    projection: projection,
-                    center: [1268351,	5986142],
+                    center: [1270351,	5986142],
                    zoom: 13,minZoom: 11,
 maxZoom: 18
                })
@@ -181,7 +196,7 @@ maxZoom: 18
                 target: 'map2',
                 view: new ol.View({
                     projection: projection,
-                    center: [1268351,	5986142],
+                    center: [1270351,	5986142],
                     zoom: 13,minZoom: 11,
 maxZoom: 18
                 })
@@ -194,7 +209,7 @@ maxZoom: 18
                 target: 'map3',
                 view: new ol.View({
                     projection: projection,
-                    center: [1268351,	5986142],
+                    center: [1270351,	5986142],
                     zoom: 13,minZoom: 11,
 maxZoom: 18
                 })
