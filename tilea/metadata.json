@@ -1,0 +1,12 @@
+{
+  "name": "tilea",
+  "version": "1.1.0",
+  "description": "",
+  "type": "overlay",
+  "format": "png",
+  "minzoom": "12",
+  "maxzoom": "17",
+  "scale": "1.000000",
+  "bounds": [11.39072295, 47.26756776, 11.45067871, 47.29729848],
+  "profile": "mercator"
+}
