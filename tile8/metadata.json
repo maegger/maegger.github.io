@@ -1,0 +1,12 @@
+{
+  "name": "tile8",
+  "version": "1.1.0",
+  "description": "",
+  "type": "overlay",
+  "format": "png",
+  "minzoom": "11",
+  "maxzoom": "17",
+  "scale": "1.000000",
+  "bounds": [11.42578125, 47.24940615, 11.45988659, 47.30903425],
+  "profile": "mercator"
+}
