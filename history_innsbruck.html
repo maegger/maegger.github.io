@@ -184,6 +184,18 @@ var layer7 = new ol.layer.Tile({
   })
 });
 
+var mapExtent6 = ol.proj.transformExtent([11.337891, 47.249406, 11.381833, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer6 = new ol.layer.Tile({
+  extent: mapExtent6,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile6/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
 var mapExtent8 = ol.proj.transformExtent([11.425781, 47.249406, 11.459887, 47.309034], 'EPSG:4326', 'EPSG:3857');
 var layer8 = new ol.layer.Tile({
   extent: mapExtent8,
@@ -218,12 +230,12 @@ var osm = new ol.layer.Tile({
 var map_old = new ol.Map({
   target: 'map_old',
   layers: [
-    osm,layer2,layer3,layer4,layer5,layer7,layer8, layer9
+    osm,layer2,layer3,layer4,layer5,layer6,layer7,layer8, layer9
     
   ],
   view: new ol.View({
-    center: [1270351,	5986142],
-    zoom: 13,minZoom: 11
+    center: [1271351,	5986142],
+    zoom: 11,minZoom: 11
   })
 });
 
@@ -253,8 +265,8 @@ var map_old = new ol.Map({
                target: 'map1',
                 view: new ol.View({
                    projection: projection,
-                    center: [1270351,	5986142],
-                   zoom: 13,minZoom: 11,
+                    center: [1271351,	5986142],
+                   zoom: 11,minZoom: 11,
 maxZoom: 18
                })
             });
@@ -266,8 +278,8 @@ maxZoom: 18
                 target: 'map2',
                 view: new ol.View({
                     projection: projection,
-                    center: [1270351,	5986142],
-                    zoom: 13,minZoom: 11,
+                    center: [1271351,	5986142],
+                    zoom: 11,minZoom: 11,
 maxZoom: 18
                 })
             });
@@ -279,8 +291,8 @@ maxZoom: 18
                 target: 'map3',
                 view: new ol.View({
                     projection: projection,
-                    center: [1270351,	5986142],
-                    zoom: 13,minZoom: 11,
+                    center: [1271351,	5986142],
+                    zoom: 11,minZoom: 11,
 maxZoom: 18
                 })
             });
