@@ -30,7 +30,7 @@
 
 <div   style="position: absolute;   
               height: 600px; width: 265px;    
-              left: 0px; top: 65px;" >1855 (derzeit nur Stadt Innsbruck ):</div>
+              left: 0px; top: 65px;" >1855 (nur Stadt Innsbruck ):</div>
         <div  id="map_old" style="position: absolute;   
               height: 550px; width: 300px;    
               left: 0px; top: 100px;" class="map"></div>
@@ -113,27 +113,18 @@
 
 
 
-var mapExtent = ol.proj.transformExtent([11.381725, 47.261813, 11.420406, 47.283148], 'EPSG:4326', 'EPSG:3857');
+
 var mapMinZoom = 13;
 var mapMaxZoom = 18;
-var layer = new ol.layer.Tile({
-  extent: mapExtent,
-  source: new ol.source.XYZ({
-    attributions: [new ol.Attribution({html: 'tile'})],
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
 
 
 
 
 
-var mapExtent5 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
+
+var mapExtent1 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
 var layer2 = new ol.layer.Tile({
-  extent: mapExtent5,
+  extent: mapExtent1,
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({html: 'tilea'})],
     url: "https://github.com/maegger/maegger.github.io/raw/master/tile1/{z}/{x}/{y}.png",
@@ -143,9 +134,9 @@ var layer2 = new ol.layer.Tile({
   })
 });
 
-var mapExtent6 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');
+var mapExtent2 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');
 var layer3 = new ol.layer.Tile({
-  extent: mapExtent6,
+  extent: mapExtent2,
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({html: 'tilea'})],
     url: "https://github.com/maegger/maegger.github.io/raw/master/tile2/{z}/{x}/{y}.png",
@@ -155,9 +146,9 @@ var layer3 = new ol.layer.Tile({
   })
 });
 
-var mapExtent7 = ol.proj.transformExtent([11.381836, 47.208416, 11.459891, 47.219568], 'EPSG:4326', 'EPSG:3857');
+var mapExtent3 = ol.proj.transformExtent([11.381836, 47.208416, 11.459891, 47.219568], 'EPSG:4326', 'EPSG:3857');
 var layer4 = new ol.layer.Tile({
-  extent: mapExtent7,
+  extent: mapExtent3,
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({html: 'tilea'})],
     url: "https://github.com/maegger/maegger.github.io/raw/master/tile3/{z}/{x}/{y}.png",
@@ -169,6 +160,54 @@ var layer4 = new ol.layer.Tile({
 
 
 
+var mapExtent5 = ol.proj.transformExtent([11.297585, 47.249406, 11.337891, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer5 = new ol.layer.Tile({
+  extent: mapExtent5,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile5/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent7 = ol.proj.transformExtent([11.381836, 47.249406, 11.425778, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer7 = new ol.layer.Tile({
+  extent: mapExtent7,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile7/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent8 = ol.proj.transformExtent([11.425781, 47.249406, 11.459887, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer8 = new ol.layer.Tile({
+  extent: mapExtent8,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile8/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+
+var mapExtent9 = ol.proj.transformExtent([11.337891, 47.219570, 11.459888, 47.249407], 'EPSG:4326', 'EPSG:3857');
+var layer9 = new ol.layer.Tile({
+  extent: mapExtent9,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile9/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
 
 
 
@@ -179,8 +218,8 @@ var osm = new ol.layer.Tile({
 var map_old = new ol.Map({
   target: 'map_old',
   layers: [
-    osm,layer2,layer3,layer4,
-    layer
+    osm,layer2,layer3,layer4,layer5,layer7,layer8, layer9
+    
   ],
   view: new ol.View({
     center: [1270351,	5986142],
