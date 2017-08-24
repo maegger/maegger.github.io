@@ -128,8 +128,6 @@ var layer = new ol.layer.Tile({
 });
 
 var mapExtent4 = ol.proj.transformExtent([11.390723, 47.267568, 11.450679, 47.297298], 'EPSG:4326', 'EPSG:3857');
-
-
 var layer1 = new ol.layer.Tile({
   extent: mapExtent4,
   source: new ol.source.XYZ({
@@ -141,6 +139,38 @@ var layer1 = new ol.layer.Tile({
   })
 });
 
+
+
+var mapExtent5 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
+var layer2 = new ol.layer.Tile({
+  extent: mapExtent5,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile1/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent6 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');
+var layer3 = new ol.layer.Tile({
+  extent: mapExtent6,
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tilea'})],
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile2/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+
+
+
+
+
+
 var osm = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
@@ -148,7 +178,7 @@ var osm = new ol.layer.Tile({
 var map_old = new ol.Map({
   target: 'map_old',
   layers: [
-    osm,layer1,
+    osm,layer1,layer2,layer3,
     layer
   ],
   view: new ol.View({
