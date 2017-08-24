@@ -18,7 +18,7 @@ body { width:100%; height:100%; background: #ffffff; }
 <div id="map"></div>
 <input id="slider" type="range" min="0" max="1" step="0.1" value="1" oninput="layer.setOpacity(this.value)">
 <script type="text/javascript">
-var mapExtent = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
+var mapExtent = 
 var mapMinZoom = 11;
 var mapMaxZoom = 17;
 var layer = new ol.layer.Tile({
