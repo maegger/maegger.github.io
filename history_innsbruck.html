@@ -65,20 +65,10 @@
                 code: 'EPSG:3857',
                 units: 'm'
             });
-            var layers1 = [
-                new ol.layer.Tile({
-                    source: new ol.source.TileWMS({
-                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
-                        crossOrigin: 'anonymous',
+var mapMinZoom = 13;
+var mapMaxZoom = 18;
 
-                        params: {
-                            'LAYERS': 'Image_1940'
-
-                        }
-                    })
-                })
-
-            ];
+            
             var layers2 = [
                 new ol.layer.Tile({
                     source: new ol.source.TileWMS({
@@ -114,8 +104,6 @@
 
 
 
-var mapMinZoom = 13;
-var mapMaxZoom = 18;
 
 
 
@@ -244,7 +232,18 @@ var map_old = new ol.Map({
 
 
 
+var layers1 = 
+                [new ol.layer.Tile({
+  extent: [1252344.271424, 5968203.168507, 1291480.029906, 6007338.926989],
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tile'})],
+    url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
 
+           ;
 
 
 
