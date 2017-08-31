@@ -69,19 +69,7 @@ var mapMinZoom = 13;
 var mapMaxZoom = 18;
 
             
-            var layers2 = [
-                new ol.layer.Tile({
-                    source: new ol.source.TileWMS({
-                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
-                        crossOrigin: 'anonymous',
-                        params: {
-                            'LAYERS': 'Image_1970-1982'
-
-                        }
-                    })
-                })
-
-            ];
+           
             var layers3 = [
                 new ol.layer.Tile({
                     source: new ol.source.TileWMS({
@@ -223,7 +211,7 @@ var map_old = new ol.Map({
   ],
   view: new ol.View({
     center: [1271351,	5986142],
-    zoom: 11,minZoom: 11
+    zoom: 11,minZoom: 11,maxZoom:18
   })
 });
 
@@ -247,6 +235,18 @@ var layers1 =
 
 
 
+var layers2 = 
+                [new ol.layer.Tile({
+  extent: [1252344.271424, 5968203.168507, 1291480.029906, 6007338.926989],
+  source: new ol.source.XYZ({
+    attributions: [new ol.Attribution({html: 'tile'})],
+    url: "https://github.com/maegger/1970/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
+
+           ;
 
 
 
