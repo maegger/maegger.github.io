@@ -53,7 +53,7 @@
         
 
    
-        Datenquelle: Land Tirol - data.tirol.gv.at. Weitere Infos unter: <a href="https://egger-gis.at">www.egger-gis.at</a> .  Hosting by: <a href="https://github.com/">https://github.com/</a>
+       Weitere Infos unter: <a href="https://egger-gis.at/urmappe">www.egger-gis.at</a> .  Hosting by: <a href="https://github.com/">https://github.com/</a>
         <script>
 
             var projection = new ol.proj.Projection({
@@ -68,6 +68,7 @@ var mapMaxZoom = 18;
             var layers3 = [
                 new ol.layer.Tile({
                     source: new ol.source.TileWMS({
+			     attributions: [new ol.Attribution({html: 'Land Tirol - data.tirol.gv.at'})],
                         url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
                         crossOrigin: 'anonymous',
                         params: {
