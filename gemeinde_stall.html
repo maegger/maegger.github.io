@@ -33,10 +33,10 @@
     <body >
         <div style="height: 85%;width: 100%">
             <h1>Gemeinde Stall</h1>
-            <div id="z"> Click into the map to get the elevation value of your point of interest... </div><br>
+            <div id="z">  </div><br>
 
             <div id="map" class="map" style="width: 100%" ></div><br>
-            Data sources: <br>Land Tirol - data.tirol.gv.at / <a href="https://basemap.at">basemap.at</a> <br>Info: Elevation values are basing on a DEM with a spatial resolution of 10 m.<br><br>More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+            Data sources: <a href="https://basemap.at">basemap.at</a> and BEV (Gemeindegrenze) <br><br>More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
             <br> 
         </div>
         <script>
@@ -81,8 +81,8 @@
                 ]),
                 target: 'map',
                 view: new ol.View({
-                    center: [1449526	5924123],
-                    zoom: 12
+                    center: [1449526,	5924123],
+                    zoom: 11
 
                 })
             });
@@ -158,17 +158,17 @@
 
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1] * 100) / 100;
-                                    document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
+                                    //document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
 
-                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
-                                    document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+                                    //document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
 
                                 }
                             }
                         } else {
-                            document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+                            //document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
 
                         }
 
