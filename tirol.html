@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Einzugsgebiete Bezirkshauptorte Tirol</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
+            }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1>Einzugsgebiete Bezirkshauptorte Tirol (Kreisradius 20 Kilometer)</h1>
+            <div id="z">  </div><br>
+
+            <div id="map" class="map" style="width: 100%" ></div><br>
+            Datenquelle: <a href="https://basemap.at">basemap.at</a><br><br>More info:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+            <br> 
+        </div>
+        <script>
+            var fill = new ol.style.Fill({
+                color: [180, 0, 0, 0.0]
+            });
+            var stroke = new ol.style.Stroke({
+                color: [180, 0, 0, 0.9],
+                width: 3
+            });
+            var style = new ol.style.Style({
+                image: new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 8
+                }),
+                fill: fill,
+                stroke: stroke
+            });
+            var format = new ol.format.WKT();
+            var feature = format.readFeature('POLYGON ((1196055 5965068, 1195076.1303259032 5958887.660112501, 1192235.3398874989 5953312.294954151, 1187810.7050458496 5948887.660112501, 1182235.3398874989 5946046.869674097, 1176055 5945068, 1169874.6601125011 5946046.869674097, 1164299.2949541507 5948887.660112501, 1159874.6601125011 5953312.294954151, 1157033.869674097 5958887.660112501, 1156055 5965068, 1157033.8696740968 5971248.339887499, 1159874.660112501 5976823.705045849, 1164299.2949541504 5981248.339887499, 1169874.660112501 5984089.130325903, 1176055 5985068, 1182235.3398874989 5984089.130325903, 1187810.7050458493 5981248.339887499, 1192235.3398874989 5976823.70504585, 1195076.130325903 5971248.339887499, 1196055 5965068))');
+	    var feature12 = format.readFeature('POLYGON ((1441837 5913742, 1440858.1303259032 5907561.660112501, 1438017.3398874989 5901986.294954151, 1433592.7050458496 5897561.660112501, 1428017.3398874989 5894720.869674097, 1421837 5893742, 1415656.6601125011 5894720.869674097, 1410081.2949541507 5897561.660112501, 1405656.6601125011 5901986.294954151, 1402815.869674097 5907561.660112501, 1401837 5913742, 1402815.8696740968 5919922.339887499, 1405656.660112501 5925497.705045849, 1410081.2949541504 5929922.339887499, 1415656.660112501 5932763.130325903, 1421837 5933742, 1428017.3398874989 5932763.130325903, 1433592.7050458493 5929922.339887499, 1438017.3398874989 5925497.70504585, 1440858.130325903 5919922.339887499, 1441837 5913742))');
+var feature121 = format.readFeature('POLYGON ((1374781 6037650, 1373802.1303259032 6031469.660112501, 1370961.3398874989 6025894.294954151, 1366536.7050458496 6021469.660112501, 1360961.3398874989 6018628.869674097, 1354781 6017650, 1348600.6601125011 6018628.869674097, 1343025.2949541507 6021469.660112501, 1338600.6601125011 6025894.294954151, 1335759.869674097 6031469.660112501, 1334781 6037650, 1335759.8696740968 6043830.339887499, 1338600.660112501 6049405.705045849, 1343025.2949541504 6053830.339887499, 1348600.660112501 6056671.130325903, 1354781 6057650, 1360961.3398874989 6056671.130325903, 1366536.7050458493 6053830.339887499, 1370961.3398874989 6049405.70504585, 1373802.130325903 6043830.339887499, 1374781 6037650))');
+           
+var feature1212 = format.readFeature('POLYGON ((1213145 6022287, 1212166.1303259032 6016106.660112501, 1209325.3398874989 6010531.294954151, 1204900.7050458496 6006106.660112501, 1199325.3398874989 6003265.869674097, 1193145 6002287, 1186964.6601125011 6003265.869674097, 1181389.2949541507 6006106.660112501, 1176964.6601125011 6010531.294954151, 1174123.869674097 6016106.660112501, 1173145 6022287, 1174123.8696740968 6028467.339887499, 1176964.660112501 6034042.705045849, 1181389.2949541504 6038467.339887499, 1186964.660112501 6041308.130325903, 1193145 6042287, 1199325.3398874989 6041308.130325903, 1204900.7050458493 6038467.339887499, 1209325.3398874989 6034042.70504585, 1212166.130325903 6028467.339887499, 1213145 6022287))');
+var feature1213 = format.readFeature('POLYGON ((1215562 5981128, 1214583.1303259032 5974947.660112501, 1211742.3398874989 5969372.294954151, 1207317.7050458496 5964947.660112501, 1201742.3398874989 5962106.869674097, 1195562 5961128, 1189381.6601125011 5962106.869674097, 1183806.2949541507 5964947.660112501, 1179381.6601125011 5969372.294954151, 1176540.869674097 5974947.660112501, 1175562 5981128, 1176540.8696740968 5987308.339887499, 1179381.660112501 5992883.705045849, 1183806.2949541504 5997308.339887499, 1189381.660112501 6000149.130325903, 1195562 6001128, 1201742.3398874989 6000149.130325903, 1207317.7050458493 5997308.339887499, 1211742.3398874989 5992883.70504585, 1214583.130325903 5987308.339887499, 1215562 5981128))');
+var feature1214 = format.readFeature('POLYGON ((1290002 5986672, 1289023.1303259032 5980491.660112501, 1286182.3398874989 5974916.294954151, 1281757.7050458496 5970491.660112501, 1276182.3398874989 5967650.869674097, 1270002 5966672, 1263821.6601125011 5967650.869674097, 1258246.2949541507 5970491.660112501, 1253821.6601125011 5974916.294954151, 1250980.869674097 5980491.660112501, 1250002 5986672, 1250980.8696740968 5992852.339887499, 1253821.660112501 5998427.705045849, 1258246.2949541504 6002852.339887499, 1263821.660112501 6005693.130325903, 1270002 6006672, 1276182.3398874989 6005693.130325903, 1281757.7050458493 6002852.339887499, 1286182.3398874989 5998427.70504585, 1289023.130325903 5992852.339887499, 1290002 5986672))');
+var feature1215 = format.readFeature('POLYGON ((1323080 5999959, 1322101.1303259032 5993778.660112501, 1319260.3398874989 5988203.294954151, 1314835.7050458496 5983778.660112501, 1309260.3398874989 5980937.869674097, 1303080 5979959, 1296899.6601125011 5980937.869674097, 1291324.2949541507 5983778.660112501, 1286899.6601125011 5988203.294954151, 1284058.869674097 5993778.660112501, 1283080 5999959, 1284058.8696740968 6006139.339887499, 1286899.660112501 6011714.705045849, 1291324.2949541504 6016139.339887499, 1296899.660112501 6018980.130325903, 1303080 6019959, 1309260.3398874989 6018980.130325903, 1314835.7050458493 6016139.339887499, 1319260.3398874989 6011714.70504585, 1322101.130325903 6006139.339887499, 1323080 5999959))');
+
+            var vector = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [feature,feature12,feature121,feature1212,feature1213,feature1214,feature1215]
+                })
+            });
+            vector.setStyle(style);
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                target: 'map',
+                view: new ol.View({
+                    center: [1268133,	5985924],
+                    zoom: 8
+
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'normal'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+               
+                map.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map.addLayer(vector);
+            });
+
+            
+            map.on('click', function (evt) {
+                nodata = false;
+                var coord = evt.coordinate;
+                var new_coord = ol.proj.transform(coord, 'EPSG:3857', 'EPSG:4326');
+                Proj4js.defs["EPSG:31255"] = "+proj=tmerc +lat_0=0 +lon_0=13.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_def";
+                // creating source and destination Proj4js objects
+                // once initialized, these may be re-used as often as needed
+                var source = new Proj4js.Proj('EPSG:4326'); //source coordinates will be in Longitude/Latitude
+                var dest = new Proj4js.Proj('EPSG:31255'); //destination coordinates in LCC, south of France
+
+
+
+                // transforming point coordinates
+
+                var p = new Proj4js.Point(new_coord[0], new_coord[1]); //any object will do as long as it has 'x' and 'y' properties
+                Proj4js.transform(source, dest, p);
+                var x = p.x;
+                var mod_x = x % 5;
+                //var mod_x = parseFloat( mod_x_st )  ;
+                var raster_x = x - mod_x;
+                var mod_testx = raster_x % 10;
+                if (mod_testx === 0) {
+                    raster_x = raster_x - 5;
+                } else {
+                    raster_x = raster_x - 10
+                }
+                var y = p.y;
+                var mod_y = y % 5;
+                var raster_y = y - mod_y;
+                var mod_testy = raster_y % 10;
+                if (mod_testy == 0) {
+                    raster_y = raster_y - 5;
+                }
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/dgm_osttirol/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                //var part = zeile.substring( 0, len );
+
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1] * 100) / 100;
+                                    //document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
+
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                } else {
+                                    //document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+
+                                }
+                            }
+                        } else {
+                            //document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
+
+                        }
+
+                    }
+                }
+
+                txtFile.send(null);
+            });
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
