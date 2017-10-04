@@ -78,7 +78,7 @@ var feature1215 = format.readFeature('POLYGON ((1323080 5999959, 1322101.1303259
             // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
             // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
             var hiDPI = ol.has.DEVICE_PIXEL_RATIO > 1;
-            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var layer = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
             var tilePixelRatio = hiDPI ? 2 : 1;
 
             var map = new ol.Map({controls: ol.control.defaults().extend([
@@ -165,7 +165,7 @@ var feature1215 = format.readFeature('POLYGON ((1323080 5999959, 1322101.1303259
                                     var hoe = Math.round(zeile.split(" ")[1] * 100) / 100;
                                     //document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
 
-                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
                                     //document.getElementById("z").innerHTML = "No elevation data. Elevation values are only in the area of East Tyrol available.";
