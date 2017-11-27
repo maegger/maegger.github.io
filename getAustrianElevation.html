@@ -44,10 +44,9 @@
 <div id="z">Dr&uuml;cken Sie in die Karte, um einen H&ouml;henwert zu erhalten.</div><br>
 
             <div id="map" class="map" style="height: 40%" ></div><br>
-            F&uuml;r die Richtigkeit, Anwendbarkeit und Verfügbarkeit dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Weiters erfolgte eine Transformation der Höhendaten von EPSG 31278 auf EPSG 3857.  Wenn sie genauerer Daten brauchen, kontaktieren Sie bitte die GIS-Abteilungen der Bundesländer.<br><br>Datenquellen: geoland.at / basemap.at
+            F&uuml;r die Richtigkeit, Anwendbarkeit und Verfügbarkeit dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Weiters erfolgte eine Transformation der Höhendaten von EPSG 31278 auf EPSG 3857.  Wenn sie genauerer Daten brauchen, kontaktieren Sie bitte die GIS-Abteilungen der Bundesländer.<br><br>Datenquellen: geoland.at / basemap.at<br><br>
             
             Falls Sie diesen Dienst in Ihre Anwendung verwenden, ist eine Nennung der Datenquelle geoland.at / basemap.at erforderlich . Beachten Sie auch die <a href="https://github.com/maegger/maegger.github.io/blob/master/LICENSE">Lizenzbedingung<a/>
-           
             <br> 
         </div>
         <script>
@@ -67,16 +66,13 @@
                 fill: fill,
                 stroke: stroke
             });
-            
             var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
-
             // HiDPI support:
             // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
             // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
             var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
             var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
             var tilePixelRatio = hiDPI ? 2 : 1;
-
             var map = new ol.Map({controls: ol.control.defaults().extend([
                     new ol.control.ScaleLine()
                 ]),
@@ -84,10 +80,8 @@
                 view: new ol.View({
                     center: [1521550, 6052959],
                     zoom: 7
-
                 })
             });
-
             $.ajax(capabilitiesUrl).then(function (response) {
                 var result = new ol.format.WMTSCapabilities().read(response);
                 var options = ol.source.WMTS.optionsFromCapabilities(result, {
@@ -97,88 +91,55 @@
                     style: 'bmaporthofoto30cm'
                 });
                 options.tilePixelRatio = tilePixelRatio;
-
                 map.addLayer(new ol.layer.Tile({
                     source: new ol.source.WMTS(options)
                 }));
                 map.addLayer(vector);
             });
-
-
             map.on('click', function (evt) {
                 nodata = false;
                 var coord = evt.coordinate;
-
-
                 var x = coord[0];
-
                 var database = "";
                 var mod_x_path = x % 20000;
                 path_x = x - mod_x_path;
-
                 var y = coord[1];
                 //var mod_y_path = y % 25000;
                 //path_y = y - mod_y_path;
-
                 database = path_x ;
-
-
-
-
-
                 var mod_y = y % 10;
                 var raster_y = y - mod_y;
-                
                 var mod_x = x % 10;
                 var raster_x = x - mod_x;
-                
-
                 var txtFile = new XMLHttpRequest();
                 txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
                 txtFile.onreadystatechange = function () {
                     if (txtFile.readyState === 4) {
-
                         // Makes sure the document is ready to parse.
                         if (txtFile.status === 200) {
                             // Makes sure it's found the file.
                             inhalt = txtFile.responseText;
                             liste = inhalt.split("\n");
                             var arrayLength = liste.length;
-                            //alert(arrayLength);
                             var len = raster_x + "";
                             for (var i = 0; i < arrayLength; i++) {
-
                                 var zeile = liste[i];
                                 var res = zeile.substring(0, len.length);
-                                //var part = zeile.substring( 0, len );
-                                
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1]);
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he : " + hoe + " m ";
-
-                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
                                     break;
                                 } else {
                                     document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
-
                                 }
                             }
                         } else {
                             document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
-
                         }
-
                     }
                 }
-
                 txtFile.send(null);
             });
-
-
-
-
-
-
         </script>
     </body>
 </html>
