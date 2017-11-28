@@ -41,22 +41,7 @@
             <br> 
         </div>
         <script>
-            var fill = new ol.style.Fill({
-                color: [180, 0, 0, 0.0]
-            });
-            var stroke = new ol.style.Stroke({
-                color: [180, 0, 0, 0.9],
-                width: 3
-            });
-            var style = new ol.style.Style({
-                image: new ol.style.Circle({
-                    fill: fill,
-                    stroke: stroke,
-                    radius: 8
-                }),
-                fill: fill,
-                stroke: stroke
-            });
+            
             var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
             // HiDPI support:
             // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
