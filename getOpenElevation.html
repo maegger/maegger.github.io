@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Austrian Elevation Service</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 30%;
+                width: 30%;
+            }
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1>Austrian Elevation Service</h1>
+            Dieser kostenlose H&ouml;hendatendienst Österreichs basierend auf einem Gel&auml;ndemodel mit 10 Meter Aufl&ouml;sung ist bis auf weiteres f&uuml;r jeden Entwickler frei zug&auml;nglich.
+                H&ouml;hendaten sind derzeit in allen Bundesl&auml;ndern bis auf Nieder&ouml;sterreich westlich von Wien verfügbar. Der westliche Teil von Nieder&ouml;sterreich wird mit der Zeit nachgeführt.<br>
+          Der Dienst basiert auf einfachen statischen Textdateien, in denen die H&ouml;heninformation in der Projektion EPSG:3857 gespeichert ist. Der Betrieb eines WMS/WMTS oder Kenntnisse über die Einbindung von solchen speziellen GIS-Diensten ist nicht notwendig.  Zielgruppe sind Programmierer, die kleine Programmierprojekte umsetzen und "grobe" H&ouml;heninformationen für Ihre Anwendungen benötigen (z.B. Studenten, Vereine, Ein-Personen-Unternehmen, spezialisierte Abteilungen großer Organisationen,...).
+            <br>Im <a href="https://raw.githubusercontent.com/maegger/maegger.github.io/master/getAustrianElevation.html">Quellcode</a> dieser Webseite finden Sie ein Beispiel wie man mit Javascript auf diesen H&ouml;hendatendienst zugreift. Jeder Programmierer ist eingeladen mich über Quellcode in anderen Programmiersprachen, die auf diese Textdateien zugreifen können, zu informieren. <br>
+            <br>Dieser Dienst ist sehr gut mit Anwendungen, welche zum Beispiel <a href="https://basemap.at">https://basemap.at</a> als Hintergrundkarte nutzen, kombinierbar.<br>
+<br>
+<div id="z">Dr&uuml;cken Sie in die Karte, um einen H&ouml;henwert zu erhalten.</div><br>
+            <div id="map" class="map"></div>Datenquellen: <a href="http://geoland.at">geoland.at</> / <a href="https://basemap.at">basemap.at</a><br><br>Beispielanwendungen, welche diesen Dienst bereits nutzen:<br>
+        
+        <a href="https://www.data.gv.at/anwendungen/abfragehilfe-hoehenpauschale-nach-rgv/">Abfragehilfe Höhenpauschale nach RGV</a>
+        <br>
+        <a href="https://www.data.gv.at/anwendungen/download-bemessungsniederschlag-zemokost-2-0/">Download Bemessungsniederschlag ZEMOKOST 2.0</a><br><br>
+        
+        
+            F&uuml;r die Richtigkeit, Anwendbarkeit und Verfügbarkeit dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Weiters erfolgte eine Transformation der H&ouml;hendaten von EPSG 31278 auf EPSG 3857.  Wenn sie genauere Daten ben&ouml;tigen, kontaktieren Sie bitte die GIS-Abteilungen der Bundesländer.<br>
+            Falls Sie diesen Dienst in Ihrer Anwendung verwenden, ist eine Nennung der Datenquelle: <a href="http://geoland.at">geoland.at</a> erforderlich. Zustätzlich soll ein Link zu dieser Webseite in Ihrer Anwendung aufscheinen.<br><a align="right" href="https://egger-gis.at"><img src="logo.png"></a>
+            
+        </div>
+        <script>
+            
+            map = new ol.Map({ 
+ 				layers : [new ol.layer.Tile({ 
+ 					source : new ol.source.OSM() 
+ 				})], 
+ 				target : 'map', 
+				controls : ol.control.defaults({ 
+					attributionOptions : /** @type {olx.control.AttributionOptions} */( { 
+ 						collapsible : false 
+					}) 
+				}), 
+				view : new ol.View({ 
+				 center: [1822642,	6141614],
+				zoom : 17
+					 
+				}) 
+			}); 
+
+            
+           
+            
+            map.on('click', function (evt) {
+                nodata = false;
+                var coord = evt.coordinate;
+                var x = coord[0];
+                var database = "";
+                var mod_x_path = x % 20000;
+                path_x = x - mod_x_path;
+                var y = coord[1];
+                database = path_x ;
+                var mod_y = y % 10;
+                var raster_y = y - mod_y;
+                var mod_x = x % 10;
+                var raster_x = x - mod_x;
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1]);
+                                    document.getElementById("z").innerHTML = "Seeh&ouml;he : " + hoe + " m ";
+                                    break;
+                                } else {
+                                    document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+                                }
+                            }
+                        } else {
+                            document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+                        }
+                    }
+                }
+                txtFile.send(null);
+            });
+        </script>
+    </body>
+</html>
