@@ -116,6 +116,7 @@
                             liste = inhalt.split("\n");
                             var arrayLength = liste.length;
                             var len = raster_x + "";
+                            document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
                             for (var i = 0; i < arrayLength; i++) {
                                 var zeile = liste[i];
                                 var res = zeile.substring(0, len.length);
@@ -123,9 +124,7 @@
                                     var hoe = Math.round(zeile.split(" ")[1]);
                                     document.getElementById("z").innerHTML = "Seeh&ouml;he : " + hoe + " m ";
                                     break;
-                                } else {
-                                    document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
-                                }
+                                } 
                             }
                         } else {
                             document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
