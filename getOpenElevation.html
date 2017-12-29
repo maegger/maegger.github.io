@@ -35,8 +35,9 @@
 <div id="z">Click into the map to get elevation data for Austria.</div><br>
             <div id="map" class="map"></div><br>
         
-            F&uuml;r die Richtigkeit, Anwendbarkeit und Verfügbarkeit dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Weiters erfolgte eine Transformation der H&ouml;hendaten von EPSG 31278 auf EPSG 3857.  Wenn sie genauere Daten ben&ouml;tigen, kontaktieren Sie bitte die GIS-Abteilungen der Bundesländer.<br>
-            Falls Sie diesen Dienst in Ihrer Anwendung verwenden, ist eine Nennung der Datenquelle: <a href="http://geoland.at">geoland.at</a> erforderlich. Weiters muss dieser Vermerk angegeben werden: Copyright (c) 2017, Manfred Egger. <br><a align="right" href="https://egger-gis.at"><img src="logo.png"></a>
+             Data source of elevation data for Austria<a href="http://geoland.at">geoland.at</a>. <br><br>
+		
+		Copyright (c) 2017, Manfred Egger. You find licence information of this elevation service  <a href="https://github.com/maegger/maegger.github.io/blob/master/LICENSE">HERE </a><br><a align="right" href="https://egger-gis.at"><img src="logo.png"></a>
             
         </div>
         <script>
@@ -85,19 +86,19 @@
                             liste = inhalt.split("\n");
                             var arrayLength = liste.length;
                             var len = raster_x + "";
-				document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+				document.getElementById("z").innerHTML = "No data...";
                             for (var i = 0; i < arrayLength; i++) {
                                 var zeile = liste[i];
                                 var res = zeile.substring(0, len.length);
 				    
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1]);
-                                    document.getElementById("z").innerHTML = "Seeh&ouml;he : " + hoe + " m ";
+                                    document.getElementById("z").innerHTML = "Elevation : " + hoe + " m ";
                                     break;
                                 } 
                             }
                         } else {
-                            document.getElementById("z").innerHTML = "Keine H&ouml;hendaten an dieser Stelle verf&uuml;gbar...";
+                            document.getElementById("z").innerHTML = "No data...";
                         }
                     }
                 }
