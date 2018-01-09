@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Abfragehilfe H&ouml;henzulage für Baustellen nach KV WLV</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 60%;
+                width: 100%;
+            }
+
+
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div >
+            <h1>&nbsp;&nbsp;Abfragehilfe H&ouml;henzulage für Baustellen nach KV WLV</h1>
+            <script>
+                var osm = new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+                osm.setVisible(false);
+                function layervisibility() {
+                    if (osm.getVisible() == false) {
+                        osm.setVisible(true);
+                    } else {
+                        osm.setVisible(false);
+                    }
+                    // The function returns the product of p1 and p2
+                }
+            </script>
+            <div id="z">&nbsp;&nbsp;Bitte navigieren Sie zu Ihrer Baustelle und drücken Sie dann in die Karte, um Ihre Höhenzulage festzustellen: </div>
+            <input type="checkbox" name="ckeckbox_layer1" onClick="layervisibility();"></> Stra�enkarte
+            <br>
+
+            <div id="map1" style="position: absolute;   
+                 width: 100%;    
+                 left: 0px; top: 110px;" class="map"  ></div>
+        </div><br><div style="text-align: left;
+                       position: fixed;
+                       bottom: 0;
+                       left:5px;">F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse wird keine Garantie oder Haftung &uuml;bernommen.<br>
+            Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. F&uuml;r Detailfragen nutzen Sie die Geodatendienste der Bundesl&auml;nder. 
+            <br>Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> / Land Tirol - data.tirol.gv.at / Kollektivvertrag für Wildbach- und Lawinenverbauung (Stand 2017)  <br>Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>.  Hosting by: <a href="https://github.com/">https://github.com/</a>
+            <br> 
+        </div>
+        <script>
+
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map1 = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                target: 'map1',
+                view: new ol.View({
+                    center: [1521550, 6052959],
+                    zoom: 7
+
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'bmaporthofoto30cm'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+
+                map1.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map1.addLayer(osm);
+            });
+
+
+            var layer2 = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+            map1.on('click', function (evt) {
+
+                nodata = false;
+                var coord = evt.coordinate;
+
+
+                var x = coord[0];
+
+                var database = "";
+                var mod_x_path = x % 20000;
+                path_x = x - mod_x_path;
+
+                var y = coord[1];
+                //var mod_y_path = y % 25000;
+                //path_y = y - mod_y_path;
+
+                database = path_x;
+
+
+
+
+
+                var mod_y = y % 10;
+                var raster_y = y - mod_y;
+
+                var mod_x = x % 10;
+                var raster_x = x - mod_x;
+
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                //var part = zeile.substring( 0, len );
+
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1]);
+                                    var klasse = ' keine Zulage'
+                                    if (hoe > 800 && hoe < 1201) {
+                                        klasse = ' LOA 204: 800 – 1.200 m'
+                                    }
+                                    if (hoe > 1201 && hoe < 1601) {
+                                        klasse = ' LOA 201: 1.201 – 1.600 m'
+                                    }
+                                    if (hoe > 1601 && hoe < 2001) {
+                                        klasse = ' LOA 202: 1.601 – 2.000 m'
+                                    }
+                                    if (hoe > 2001) {
+                                        klasse = ' LOA 203: &uuml;ber 2.000 m'
+                                    }
+                                    
+                                    document.getElementById("z").innerHTML = "Seeh&ouml;he: " + hoe + " m :" + klasse;
+
+                                    //document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                } else {
+                                    document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
+
+                                }
+                            }
+                        } else {
+                            document.getElementById("z").innerHTML = "Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
+
+                        }
+
+                    }
+                }
+
+                txtFile.send(null);
+            });
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
