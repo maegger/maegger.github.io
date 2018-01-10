@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Check Austrian Projection</title>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script>
+            function getZ() {
+                Proj4js.defs["EPSG:31255"]="+proj=tmerc +lat_0=0 +lon_0=13.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_def";
+                // creating source and destination Proj4js objects
+// once initialized, these may be re-used as often as needed
+                var source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
+                var dest = new Proj4js.Proj('EPSG:31255');     //destination coordinates in LCC, south of France
+
+
+
+// transforming point coordinates
+
+                var p = new Proj4js.Point(document.getElementById("x").value,document.getElementById("y").value);   //any object will do as long as it has 'x' and 'y' properties
+                Proj4js.transform(source, dest, p);
+                
+                var x = p.x;
+                var mod_x = x % 5;
+                //var mod_x = parseFloat( mod_x_st )  ;
+                var raster_x = x - mod_x;
+                var mod_testx = raster_x % 10;
+                if (mod_testx === 0) {
+                    raster_x = raster_x - 5;
+
+                } else {
+                    raster_x = raster_x - 10
+                }
+                var y = p.y;
+                var mod_y = y % 5;
+                var raster_y = y - mod_y;
+                var mod_testy = raster_y % 10;
+                if (mod_testy == 0) {
+                    raster_y = raster_y - 5;
+                }
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/dgm_osttirol/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            for (var i = 0; i < arrayLength; i++) {
+                                var zeile = liste[i];
+                                if (zeile.startsWith(raster_x)) {
+
+                                    document.getElementById("z").innerHTML = "Seehöhe: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                txtFile.send(null);
+            }
+
+        </script>
+
+
+        <style>
+            .map {
+                background: white;
+                height: 75%;
+                width: 100%;
+            }
+
+            body, html {
+                height: 100%;
+                width: 100%;
+            }
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 3px;
+                padding-right: 3px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="height: 85%;width: 100%">
+            <h1 style="font-weight: bold">Höhenabfrage</h1>
+            Koordinate  eingeben (GKM31)  :<br>
+
+            X:
+            <input  id="x" value="12.484545"><br>
+            Y:
+            <input  id="y" value="46.914083">
+            <br/><br>
+            <button type="button" onclick="getZ()">Seehöhe für Punkt ermitteln</button><br>
+            <br>
+            <div  id="z">Seehöhe:</div>
+
+
+        </div>
+
+
+    </body>
+</html>
