@@ -33,14 +33,14 @@
     <body >
         <div style="height: 85%;width: 100%">
             <h1>Höhenmeterbasiertes Fuß-Kilometergeld nach RGV § 11</h1>
-            
+            <div id="z">Ermitteln Sie zuerst die Seeh&oumlhe für den Ausgangspunkt Ihrer Fußstrecke... Klicken Sie entweder in die Karte oder geben Sie die Seehöhe mit der Hand in die vorgesehenen Felder ein. </div><br>
           <input type="radio" checked="checked" id="mc" name="Zahlmethode" value="Seeh&ouml;he Ausgangspunkt (m): ">
     <label for="mc"> Seeh&ouml;he Ausgangspunkt (m):</label><input id="unten" type="text"></><br> 
     <input type="radio" id="vi" name="Zahlmethode" value="Seeh&ouml;he Endpunkt (m): ">
     <label for="vi"> Seeh&ouml;he Endpunkt (m): </label><input id="oben" type="text"></><br> 
 <br>
  <button type="button" onclick="kilometer()">Fuß-Kilometergeld berechnen</button> <br><br>
-<div id="z">Ermitteln Sie zuerst die Seeh&oumlhe für den Ausgangspunkt Ihrer Fußstrecke... Klicken Sie entweder in die Karte oder geben Sie die Seehöhe mit der Hand in die vorgesehenen Felder ein. </div><br>
+
  <script type="text/javascript">
 
 
@@ -62,7 +62,7 @@ document.getElementById("z").innerHTML = "Im Rahmen Ihrer Dienstreise wurden zwe
 
 
 </script>
-            <div id="map" class="map" style="height: 65%" ></div><br>
+            <div id="map" class="map" style="height: 60%" ></div><br>
             F&uuml;r die Richtigkeit und Anwendbarkeit der Ergebnisse dieses Dienstes wird keine Garantie oder Haftung &uuml;bernommen. Achtung: Die H&ouml;hendaten basieren auf einem Gel&auml;ndemodel mit 10 m Aufl&ouml;sung und sind auf Ganzzahlen gerundet. Datenquellen: geoland.at / basemap.at
             <br> Weitere Informationen:<a href="https://egger-gis.at">https://egger-gis.at</a>
         </div>
