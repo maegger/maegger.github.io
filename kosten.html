@@ -1,0 +1,219 @@
+﻿<script type="text/javascript">
+//<![CDATA[
+
+ function zuAbChange() {
+     var val1 = parseInt(document.getElementById("s1").value);
+     var val2 = parseInt(document.getElementById("s2").value);
+     
+     var val3 = parseInt(document.getElementById("s3").value);
+     var val4 = parseInt(document.getElementById("s4").value);
+     var val5 = parseInt(document.getElementById("s5").value);
+     var val6 = parseInt(document.getElementById("s6").value);
+     var val7 = parseInt(document.getElementById("s7").value);
+     var val = val1 +val2 + val3 +val4+val5+val6+val7;
+     if (val > -21 && val < 8){
+         document.getElementById("zuab").innerHTML ="<b>Summe (max. +7 / -20 %): " + val + " %<\/b>";
+     }
+ }
+    
+function getGem() {
+    var url = 'https://raw.githubusercontent.com/maegger/gem/master/';
+    
+    var txtFile = new XMLHttpRequest();
+    
+       txtFile.open("GET", url  + "kraft" + ".txt", true);
+       txtFile.onreadystatechange = function () {
+           
+    var url = 'https://raw.githubusercontent.com/maegger/gem/master/';
+    var selectBox = document.getElementById("selectBoxGem");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+   
+    var gemid = selectedValue.split(" - ")[1]+"";
+                    if (txtFile.readyState === 4) {
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            var combo = "";
+                            for (var i = 0; i < arrayLength; i++) {
+                                var zeile = liste[i];
+                                var split = zeile.split(";");
+                                
+                                if (split[0] == gemid){
+                                    combo = "<br><b>"+selectedValue+":<\/b><br> " + "Finanzkraft: "+split[3]+ " EUR pro Einwohner (Rang: "+ split[4]+ " in Österreich)";
+                                    var rang = parseInt(split[4]);
+                                    
+                                    var geld = (rang-2100)*(-9-3)/(1-2100)+3;
+                                    document.getElementById("s1").value = Math.round(geld);
+                                    zuAbChange();
+                                }
+                                   
+                                
+                            }
+                            
+                            document.getElementById("g").innerHTML = combo;
+                        }
+                    }}
+                
+                txtFile.send(null);
+    
+  }
+  function changeFunc() {
+       var url = 'https://raw.githubusercontent.com/maegger/gem/master/';
+    var selectBox = document.getElementById("selectBox");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+       
+                       
+      if (selectedValue == "Tirol"){
+       var txtFile = new XMLHttpRequest();
+       txtFile.open("GET", url  + selectedValue + ".txt", true);
+       txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            var combo = "<select  style=\"width: 300px;\"  id=\"selectBoxGem\" size=\"4\" onchange=\"getGem();\" >";
+                            for (var i = 0; i < arrayLength; i++) {
+                                var zeile = liste[i];
+                                var split = zeile.split(";");
+                                combo = combo +"<option>"+split[1] +" - "  + split[0]+"<\/option>";
+           
+                                   
+                                
+                            }
+                            combo = combo +"<\/select>";
+                            document.getElementById("z").innerHTML = combo;
+                        }
+                    }}
+                
+                txtFile.send(null);
+  }else{
+      alert("Daten derzeit nur für Tirol vorhanden");
+  }
+
+   }
+
+
+
+
+//]]>
+</script> <b>Bundeslandauswahl:</b>
+<form>
+    <select style="width: 300px;" id="selectBox" size="2" onchange="changeFunc();">
+        <option>
+            Tirol
+        </option>
+        <option>
+            Burgenland
+        </option>
+        <option>
+            Wien
+        </option>
+        <option>
+            Niederösterreich
+        </option>
+        <option>
+            Steiermark
+        </option>
+        <option>
+            Oberösterreich
+        </option>
+        <option>
+            Salzburg
+        </option>
+        <option>
+            Kärnten
+        </option>
+        <option>
+            Vorarlberg
+        </option>
+    </select>
+</form>
+<b>Gemeindeauswahl:</b>
+<div id="z">
+    <select style="width: 300px;" id="selectBoxGem" size="4" onchange="changeFunc();">
+        <option>
+            zuerst oben Bundesland auswählen
+        </option>
+    </select>
+</div>
+
+<div id="g">
+    <br />
+    <br />
+    <br />
+</div>
+<b>Zu- und Abschläge in Prozent:</b>
+<table>
+    <tr>
+        <td>
+            Finanzielle Situation Gemeinde/Genossenschaft (max. +3 / -9 %):
+        </td>
+        <td>
+            <input id="s1" type="number" min="-20" max="7" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            Zahl der Wildbäche mit Verbauungsmaßnahmen (max. +2 %):
+        </td>
+        <td>
+            <input id="s2" type="number" min="0" max="2" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            Kosten-Nutzen-Untersuchung (max. +2 / -6 %):
+        </td>
+        <td>
+            <input id="s3" type="number" min="-6" max="2" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            Überregionale Bedeutung, öffentliches Interesse (max. +2 %):
+        </td>
+        <td>
+            <input id="s4" type="number" min="0" max="2" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            gesamtheitliche Sanierung des Einzugsgebietes (max. 5 %):
+        </td>
+        <td>
+            <input id="s5" type="number" min="0" max="5" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            in hohem Maße ökologisch (max. 5 %):
+        </td>
+        <td>
+            <input id="s6" type="number" min="0" max="5" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            anthropogene Beeinträchtigungen (min. -5 %):
+        </td>
+        <td>
+            <input id="s7" type="number" min="-5" max="0" step="1" value="0" onchange="zuAbChange();" />
+        </td>
+    </tr>
+</table>
+
+<div id="zuab">
+    <b>Summe (max. +7 / -20 %): 0 %</b>
+</div>
