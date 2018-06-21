@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Abfragehilfe H&ouml;henzulage f&uuml;r Arbeiten im Gebirge</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.9.0/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.9.0/build/ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+            .map {
+                background: white;
+                height: 100%;
+                width: 100%;
+            }
+
+
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                
+
+                font-weight: 400;
+
+            }
+
+        </style>
+    </head>
+    <body >
+        <div style="position: absolute;   
+                 
+             top: 0px;z-index:10;left:5%;background: #F5D0A9;border-spacing: 10px;">
+            
+            <script>
+                var osm = new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+                osm.setVisible(false);
+                function layervisibility() {
+                    if (osm.getVisible() == false) {
+                        osm.setVisible(true);
+                    } else {
+                        osm.setVisible(false);
+                    }
+                    // The function returns the product of p1 and p2
+                }
+            </script>
+
+            <div style="margin-bottom:3pt;margin-left:3pt;">
+<h1>Abfragehilfe H&ouml;henzulage f&uuml;r Arbeiten im Gebirge</h1>
+            <div id="z" >Bitte navigieren Sie zu Ihrer Baustelle und dr&uuml;cken Sie dann in die Karte, um Ihre H&ouml;henzulage festzustellen: </div>
+            <input type="checkbox" name="ckeckbox_layer1" onClick="layervisibility();"></> <b>Stra&szlig;enkarte (Open Street Map).</b> <br>Dieses Tool gilt für Baustellen der Wildbach- u. Lawinenverbauung, zur Errichtung, Instandhaltung, Instandsetzung oder dem Abbruch von Berg- u. Seilbahnen sowie zur Errichtung, Instandhaltung, Instandsetzung oder Abbruch von Beschneiungsanlagen einschließlich der dazugehörenden Nebenbauwerke wie Wasserreservoirs und dergleichen.<br>Datenquellen: <a href="http://geoland.at">geoland.at</a> / <a href="https://basemap.at">basemap.at</a> /  Kollektivvertrag f&uuml;r Bauindustrie und Baugewerbe (Stand 2018)  / Programmierung: <a href="https:egger-gis.at">https://egger-gis.at</a>
+            </div></div>
+
+            <div id="map1" class="map"  style="position: absolute;   
+                 
+             top: 0px;z-index:1;"></div>
+       
+            
+           
+           
+        
+        <script>
+
+            var capabilitiesUrl = 'https://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml';
+
+            // HiDPI support:
+            // * Use 'bmaphidpi' layer (pixel ratio 2) for device pixel ratio > 1
+            // * Use 'geolandbasemap' layer (pixel ratio 1) for device pixel ratio == 1
+            var hiDPI = ol.has.DEVICE_PIXEL_RATIO < 1;
+            var layer = hiDPI ? 'bmaphidpi' : 'bmaporthofoto30cm';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+
+            var map1 = new ol.Map({controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                target: 'map1',
+                view: new ol.View({
+                    center: [1521550, 6052959],
+                    zoom: 7
+
+                })
+            });
+
+            $.ajax(capabilitiesUrl).then(function (response) {
+                var result = new ol.format.WMTSCapabilities().read(response);
+                var options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: layer,
+                    matrixSet: 'google3857',
+                    requestEncoding: 'REST',
+                    style: 'bmaporthofoto30cm'
+                });
+                options.tilePixelRatio = tilePixelRatio;
+
+                map1.addLayer(new ol.layer.Tile({
+                    source: new ol.source.WMTS(options)
+                }));
+                map1.addLayer(osm);
+            });
+
+
+            var layer2 = hiDPI ? 'bmaphidpi' : 'geolandbasemap';
+            var tilePixelRatio = hiDPI ? 2 : 1;
+            map1.on('click', function (evt) {
+
+                nodata = false;
+                var coord = evt.coordinate;
+
+
+                var x = coord[0];
+
+                var database = "";
+                var mod_x_path = x % 20000;
+                path_x = x - mod_x_path;
+
+                var y = coord[1];
+                //var mod_y_path = y % 25000;
+                //path_y = y - mod_y_path;
+
+                database = path_x;
+
+
+
+
+
+                var mod_y = y % 10;
+                var raster_y = y - mod_y;
+
+                var mod_x = x % 10;
+                var raster_x = x - mod_x;
+
+
+                var txtFile = new XMLHttpRequest();
+                txtFile.open("GET", "https://raw.githubusercontent.com/maegger/" + database + "/master/" + raster_y + ".txt", true);
+                txtFile.onreadystatechange = function () {
+                    if (txtFile.readyState === 4) {
+
+                        // Makes sure the document is ready to parse.
+                        if (txtFile.status === 200) {
+                            // Makes sure it's found the file.
+                            inhalt = txtFile.responseText;
+                            liste = inhalt.split("\n");
+                            var arrayLength = liste.length;
+                            //alert(arrayLength);
+                            var len = raster_x + "";
+                            for (var i = 0; i < arrayLength; i++) {
+
+                                var zeile = liste[i];
+                                var res = zeile.substring(0, len.length);
+                                //var part = zeile.substring( 0, len );
+
+                                if (res === len) {
+                                    var hoe = Math.round(zeile.split(" ")[1]);
+                                    var klasse = ' keine Zulage'
+                                    
+                                    if (hoe > 1199 && hoe < 1600) {
+                                        klasse = ' von 1200 m bis 1600 m : 10 %'
+                                    }
+                                    if (hoe > 1599 && hoe < 2001) {
+                                        klasse = ' von 1600 m bis 2000 m : 18 %'
+                                    }
+                                    if (hoe > 1999) {
+                                        klasse = ' &uuml;ber 2.000 m : 22 %'
+                                    }
+                                    
+                                    document.getElementById("z").innerHTML = "<b>&nbsp;&nbsp;Seeh&ouml;he: " + hoe + " m / " + klasse +"</b>";
+
+                                    //document.getElementById("z").innerHTML = "SeehÃ¶he: " + (Math.round(zeile.split(" ")[1] * 100) / 100) + " m";
+                                    break;
+                                } else {
+                                    document.getElementById("z").innerHTML = "&nbsp;&nbsp;Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
+
+                                }
+                            }
+                        } else {
+                            document.getElementById("z").innerHTML = "&nbsp;&nbsp;Derzeit keine H&ouml;hendaten an dieser Stelle vorhanden. Bitte kontaktieren Sie manfred@egger-gis.at."
+
+                        }
+
+                    }
+                }
+
+                txtFile.send(null);
+            });
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
