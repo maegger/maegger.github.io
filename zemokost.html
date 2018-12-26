@@ -7,6 +7,7 @@
         <script src="bootstrap.min.js"></script>
         <link rel="stylesheet" href="ol.css" type="text/css">
         <script src="ol.js"></script>
+	<script type="text/javascript" src="proj4js-combined.js"></script>
         <style>
 
 
@@ -105,11 +106,58 @@
             select_interaction.getFeatures().on("add", function (e) {
 
                 nodata = false;
+
+
+		
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 var x = e.element.getGeometry().getExtent()[0];
                 var database = "";
                 var mod_x_path = x % 20000;
                 path_x = x - mod_x_path;
                 var y = e.element.getGeometry().getExtent()[1];
+
+
+
+		Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs"
+		Proj4js.defs["EPSG:31287"] = "+proj=lcc +lat_1=49 +lat_2=46 +lat_0=47.5 +lon_0=13.33333333333333 +x_0=400000 +y_0=400000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs";
+                // creating source and destination Proj4js objects
+                // once initialized, these may be re-used as often as needed
+                var source = new Proj4js.Proj('EPSG:3857'); //source coordinates will be in Longitude/Latitude
+                var dest = new Proj4js.Proj('EPSG:31287'); //destination coordinates in LCC, south of France
+
+
+
+                // transforming point coordinates
+		
+                var p = new Proj4js.Point(x, y);
+                Proj4js.transform(source, dest, p);
+                var x_n = Math.round(p.x);
+		var y_n = Math.round(p.y);
+		
+
+
+
+
+
+
+
+
                 database = path_x;
                 var mod_y = y % 10;
                 var raster_y = y - mod_y;
@@ -130,7 +178,7 @@
                                 //var part = zeile.substring( 0, len );
                                 if (res === len) {
                                     var hoe = Math.round(zeile.split(" ")[1]);
-                                    document.getElementById('z').innerHTML= " &nbsp;H&ouml;heninfo (m): " + hoe;
+                                    document.getElementById('z').innerHTML= " &nbsp;Geographische Position: X: "+x_n+"[m] ; Y: "+y_n+"[m] ; Z: "+ hoe +"[m] ; MGI/Austria Lambert(EPSG:31287) ; alle Werte auf Ganzzahlen gerundet";
                                     document.getElementById('gitterpunkt').innerHTML = "";
                                     feature = e.element; //the feature selected
                                     if (document.getElementById("mc").checked == true) {
