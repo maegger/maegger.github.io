@@ -81,7 +81,8 @@
  [  47.296188440491846,11.413984264089244 ]
       ];            
       
-      var polyline = L.polyline(polylinePoints).addTo(map);    
+      var polyline = L.polyline(polylinePoints).addTo(map);  
+polyline.bindPopup("Abschnitt 1: 17 Schlaeuche (KLF Neu-Arzl - KLF Arzl)");  
 
 var polylinePoints1 = [[47.2946,11.4098],
 [47.2945,11.4096],
@@ -138,21 +139,21 @@ var polylinePoints1 = [[47.2946,11.4098],
       ];            
       
       var polyline1 = L.polyline(polylinePoints1).addTo(map);    
-
+polyline1.bindPopup("Abschnitt 2: 18 Schlaeuche (KLF Arzl - TLS Arzl)");  
 
 	var marker = L.marker([47.2962,11.4140]).addTo(map);
  	
-	marker.bindPopup("TS 1 - Ansaugen Muehlauerklammbach");
+	marker.bindPopup("KLF Neu-Arzl - Ansaugen Muehlauerklammbach");
 	var marker1 = L.marker([47.2941,11.4129]).addTo(map);
-	marker1.bindPopup("TS 2 - 17 Schlaeuche");
+	marker1.bindPopup("KLF Arzl");
 	var marker2 = L.marker([47.2946,11.4098]).addTo(map);
-	marker2.bindPopup("TS 3 - 18 Schlaeuche");
+	marker2.bindPopup("TLS Arzl");
 
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery Â© <a href="https://www.mapbox.com/">Mapbox</a>',
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		id: 'mapbox.streets'
 	}).addTo(map);
 
