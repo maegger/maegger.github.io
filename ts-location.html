@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-
+<script src="https://rawgithub.com/mylen/leaflet.TileLayer.WMTS/master/leaflet-tilelayer-wmts.js"></script>
 
 	<style>
 		html, body {
@@ -82,7 +82,7 @@
       ];            
       
       var polyline = L.polyline(polylinePoints).addTo(map);  
-polyline.bindPopup("Abschnitt 1: 17 Schlaeuche (KLF Neu-Arzl - KLF Arzl)");  
+
 
 var polylinePoints1 = [[47.2946,11.4098],
 [47.2945,11.4096],
@@ -139,23 +139,28 @@ var polylinePoints1 = [[47.2946,11.4098],
       ];            
       
       var polyline1 = L.polyline(polylinePoints1).addTo(map);    
-polyline1.bindPopup("Abschnitt 2: 18 Schlaeuche (KLF Arzl - TLS Arzl)");  
+
 
 	var marker = L.marker([47.2962,11.4140]).addTo(map);
  	
-	marker.bindPopup("KLF Neu-Arzl - Ansaugen Muehlauerklammbach");
+	marker.bindPopup("KLF Neu-Arzl - 13 Schl&auml;uche zu KLF Arzl");
 	var marker1 = L.marker([47.2941,11.4129]).addTo(map);
-	marker1.bindPopup("KLF Arzl");
+	marker1.bindPopup("TLS Arzl - 4 Schl&auml;uche zu KLF Neu-Arzl; 10 Schl&auml;uche zu TLF Arzl");
 	var marker2 = L.marker([47.2946,11.4098]).addTo(map);
-	marker2.bindPopup("TLS Arzl");
+	marker2.bindPopup("TLS Arzl - 8 Schl&auml;uche zu KLF Arzl");
 
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(map);
+
+var ign = new L.tileLayer("http://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+    subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, <a href="http://www.isticktoit.net">isticktoit.net</a>'
+});
+map.addLayer(ign);
+
+var ign1 = new L.tileLayer("http://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+    subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+    attribution: '&copy; <a href="http://basemap.at">Basemap.at</a>, <a href="http://www.isticktoit.net">isticktoit.net</a>'
+});
+map.addLayer(ign1);	
 
 	function onLocationFound(e) {
 		var radius = e.accuracy / 2;
