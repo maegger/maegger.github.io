@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Wortumdreher APP</h1>
+
+
+  <label for="fname">Wort eingeben:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+  
+<button type="button" onclick="disableElement()">Wort umdrehen und ausgeben</button>
+
+<script>
+function disableElement() {
+alert(document.getElementById("fname").value.split("").reverse().join(""));
+
+}
+</script>
+
+</body>
+</html>
