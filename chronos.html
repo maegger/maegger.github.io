@@ -24,7 +24,7 @@
         </style>
     </head>
     <body>
-        <h3>Siedlungsgeschichte Landeshauptstadt Innsbruck (1940, 1940, 1970-1973 bis heute)</h3> 
+        <h3>Siedlungsgeschichte Landeshauptstadt Innsbruck (1940t, 1940, 1970-1973 bis heute)</h3> 
  
        
    <table style="width:100%;height:80%;">
@@ -103,20 +103,19 @@ var osm = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
 
-var map_old = new ol.Map({
-    controls: ol.control.defaults().extend([
+var map_old  = new ol.Map({
+                controls: ol.control.defaults().extend([
                     new ol.control.ScaleLine()
                 ]),
-  target: 'map_old',
-  layers: [
-   layersold
-  ],
-  view: new ol.View({
-    center: [1271351,	5986142],
-    zoom: 11,minZoom: 11,maxZoom:18
-  })
-});
-
+                layers: layersold,
+               target: 'map1',
+                view: new ol.View({
+                   projection: projection,
+                    center: [1271351,	5986142],
+                   zoom: 11,minZoom: 11,
+maxZoom: 18
+               })
+            });
 
 
 var layers1 = 
