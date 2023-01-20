@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;title&gt;Siedlungsgeschichte Innsbruck und Marthadoerfer&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;script src="jquery-1.11.2.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;link rel="stylesheet" href="bootstrap.min.css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;script src="bootstrap.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;link rel="stylesheet" href="ol.css" type="text/css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;script src="ol.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;script type="text/javascript" src="proj4js-combined.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;style&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>font-family:<span class="Apple-converted-space">  </span>Arial, Helvetica, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>padding-left: 1px;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>padding-right: 1px;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>font-weight: 600;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Siedlungsgeschichte Landeshauptstadt Innsbruck (1856, 1940, 1970-1973 bis heute)&lt;/h3&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p2"><span class="Apple-converted-space"> </span></p>
+<p class="p2"><span class="Apple-converted-space">       </span></p>
+<p class="p1"><span class="Apple-converted-space">   </span>&lt;table style="width:100%;height:80%;"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;tr &gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;td style="width:50%;height:50%;" &gt;&lt;div style="width:100%;height:100%;" id="map_old"<span class="Apple-converted-space">  </span>class="map"&gt;&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;td style="width:50%;height:50%;" &gt; &lt;div style="width:100%;height:100%;"<span class="Apple-converted-space">  </span>id="map1"<span class="Apple-converted-space">  </span>class="map"&gt;&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p2"><span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/tr&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;td style="width:50%;height:50%;" &gt; &lt;div style="width:100%;height:100%;"<span class="Apple-converted-space">  </span>id="map2" class="map"&gt;&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;td style="width:50%;height:50%;" &gt; &lt;div style="width:100%;height:100%;"<span class="Apple-converted-space">  </span>id="map3" class="map"&gt;&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/tr&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1">&lt;/table&gt;<span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">    </span>&lt;br&gt;</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">    </span>Datenquellen: Land Tirol - data.tirol.gv.at u. Tiroler Landesarchiv.<span class="Apple-converted-space">  </span>Diese Anwendung nutzt: &lt;a href="https://openlayers.org"&gt;https://openlayers.org&lt;/a&gt; &lt;br&gt;Weitere Infos unter: &lt;a href="https://www.egger-gis.at/urmappe"&gt;https://egger-gis.at&lt;/a&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p2"><span class="Apple-converted-space">     </span></p>
+<p class="p2"><span class="Apple-converted-space">   </span></p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">       </span></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">   </span></p>
+<p class="p2"><span class="Apple-converted-space">       </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>var projection = new ol.proj.Projection({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>code: 'EPSG:3857',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>units: 'm'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1">var mapMinZoom = 13;</p>
+<p class="p1">var mapMaxZoom = 18;</p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p2"><span class="Apple-converted-space">           </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>var layers3 = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>source: new ol.source.TileWMS({</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span> <span class="Apple-converted-space">   </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>crossOrigin: 'anonymous',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>params: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'LAYERS': 'Image_Aktuell_RGB'</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>})</p>
+<p class="p1"><span class="Apple-converted-space">                </span>})</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent1 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer2 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent1,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile1/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent2 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer3 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent2,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile2/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent3 = ol.proj.transformExtent([11.381836, 47.208416, 11.459891, 47.219568], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer4 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent3,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile3/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent5 = ol.proj.transformExtent([11.297585, 47.249406, 11.337891, 47.309034], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer5 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent5,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile5/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent7 = ol.proj.transformExtent([11.381836, 47.249406, 11.425778, 47.309034], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer7 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent7,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile7/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent6 = ol.proj.transformExtent([11.337891, 47.249406, 11.381833, 47.309034], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer6 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent6,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile6/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent8 = ol.proj.transformExtent([11.425781, 47.249406, 11.459887, 47.309034], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer8 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent8,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile8/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var mapExtent9 = ol.proj.transformExtent([11.337891, 47.219570, 11.459888, 47.249407], 'EPSG:4326', 'EPSG:3857');</p>
+<p class="p1">var layer9 = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: mapExtent9,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/maegger.github.io/raw/master/tile9/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var osm = new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.OSM()</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">var map_old = new ol.Map({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>controls: ol.control.defaults().extend([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>new ol.control.ScaleLine()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]),</p>
+<p class="p1"><span class="Apple-converted-space">  </span>target: 'map_old',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>layers: [</p>
+<p class="p1"><span class="Apple-converted-space">   </span>layer2,layer3,layer4,layer5,layer6,layer7,layer8, layer9</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>view: new ol.View({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>center: [1271351,<span class="Apple-tab-span">	</span>5986142],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>zoom: 11,minZoom: 11,maxZoom:18</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var layers1 =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>[new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})})]</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">           </span>;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">var layers2 =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>[new ol.layer.Tile({</p>
+<p class="p1"><span class="Apple-converted-space">  </span>extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>source: new ol.source.XYZ({</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: "https://github.com/maegger/1970/raw/master/tile/{z}/{x}/{y}.png",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tilePixelRatio: 1.000000,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>minZoom: mapMinZoom,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>maxZoom: mapMaxZoom</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})})]</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">           </span>;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>var map1 = new ol.Map({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>controls: ol.control.defaults().extend([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>new ol.control.ScaleLine()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>layers: layers1,</p>
+<p class="p1"><span class="Apple-converted-space">               </span>target: 'map1',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>view: new ol.View({</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>projection: projection,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>center: [1271351,<span class="Apple-tab-span">	</span>5986142],</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>zoom: 11,minZoom: 11,</p>
+<p class="p1">maxZoom: 18</p>
+<p class="p1"><span class="Apple-converted-space">               </span>})</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var map2 = new ol.Map({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>controls: ol.control.defaults().extend([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>new ol.control.ScaleLine()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>layers: layers2,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>target: 'map2',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>view: new ol.View({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>projection: projection,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>center: [1271351,<span class="Apple-tab-span">	</span>5986142],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>zoom: 11,minZoom: 11,</p>
+<p class="p1">maxZoom: 18</p>
+<p class="p1"><span class="Apple-converted-space">                </span>})</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var map3 = new ol.Map({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>controls: ol.control.defaults().extend([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>new ol.control.ScaleLine()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>layers: layers3,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>target: 'map3',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>view: new ol.View({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>projection: projection,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>center: [1271351,<span class="Apple-tab-span">	</span>5986142],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>zoom: 11,minZoom: 11,</p>
+<p class="p1">maxZoom: 18</p>
+<p class="p1"><span class="Apple-converted-space">                </span>})</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>function onMoveEndmap(evt) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var map = evt.map;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var extent = map.getView().calculateExtent(map_old.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var zo = map.getView().getZoom();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().fit(extent, map_old.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().fit(extent, map_old.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onMoveEndmap1(evt) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var map = evt.map;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var extent = map.getView().calculateExtent(map1.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var zo = map.getView().getZoom();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().fit(extent, map1.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().fit(extent, map1.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().setZoom(zo);</p>
+<p class="p1">map_old.getView().fit(extent, map1.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map_old.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onMoveEndmap2(evt) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var map = evt.map;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var extent = map.getView().calculateExtent(map2.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var zo = map.getView().getZoom();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().fit(extent, map2.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map3.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().fit(extent, map2.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().setZoom(zo);</p>
+<p class="p1">map_old.getView().fit(extent, map2.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map_old.getView().setZoom(zo);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onMoveEndmap3(evt) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var map = evt.map;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var extent = map.getView().calculateExtent(map3.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>var zo = map.getView().getZoom();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().fit(extent, map3.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map1.getView().setZoom(zo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map2.getView().fit(extent, map3.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map2.getView().setZoom(zo);</p>
+<p class="p1">map_old.getView().fit(extent, map3.getSize());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>map_old.getView().setZoom(zo);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1">map_old.on('moveend', onMoveEndmap);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>map1.on('moveend', onMoveEndmap1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>map2.on('moveend', onMoveEndmap2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>map3.on('moveend', onMoveEndmap3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
