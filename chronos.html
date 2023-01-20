@@ -24,7 +24,7 @@
         </style>
     </head>
     <body>
-        <h3>Siedlungsgeschichte Landeshauptstadt Innsbruck (1856, 1940, 1970-1973 bis heute)</h3> 
+        <h3>Siedlungsgeschichte Marthadoerfer (1949, 1946, 1970-1973 bis heute)</h3> 
  
        
    <table style="width:100%;height:80%;">
@@ -201,14 +201,25 @@ var layer9 = new ol.layer.Tile({
 var osm = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
+var layers99 = 
+                [new ol.layer.Tile({
+  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
+  source: new ol.source.XYZ({
+    
+    url: "https://austrian-geodata-services.org/1946/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
 
+           ;
 var map_old = new ol.Map({
     controls: ol.control.defaults().extend([
                     new ol.control.ScaleLine()
                 ]),
   target: 'map_old',
   layers: [
-   layer2,layer3,layer4,layer5,layer6,layer7,layer8, layer9
+   layers99
     
   ],
   view: new ol.View({
@@ -216,6 +227,7 @@ var map_old = new ol.Map({
     zoom: 11,minZoom: 11,maxZoom:18
   })
 });
+
 
 
 
