@@ -195,6 +195,18 @@ var layer9 = new ol.layer.Tile({
     maxZoom: mapMaxZoom
   })
 });
+var layersold = 
+                [new ol.layer.Tile({
+  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
+
+           ;
 
 
 
@@ -208,7 +220,7 @@ var map_old = new ol.Map({
                 ]),
   target: 'map_old',
   layers: [
-   layer2,layer3,layer4,layer5,layer6,layer7,layer8, layer9
+   layersold
     
   ],
   view: new ol.View({
