@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+    <head>
+ <title>Siedlungsgeschichte Innsbruck und Marthadoerfer</title>
+        <script src="jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <script src="bootstrap.min.js"></script>
+ <link rel="stylesheet" href="ol.css" type="text/css">
+        <script src="ol.js"></script>
+        <script type="text/javascript" src="proj4js-combined.js"></script>
+        <style>
+
+
+          
+            * {
+                font-family:  Arial, Helvetica, sans-serif;
+                padding-left: 1px;
+                padding-right: 1px;
+
+                font-weight: 600;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <h3>Siedlungsgeschichte Landeshauptstadt Innsbruck (1856, 1940, 1970-1973 bis heute)</h3> 
+ 
+       
+   <table style="width:100%;height:80%;">
+   
+  <tr >
+    <td style="width:50%;height:50%;" ><div style="width:100%;height:100%;" id="map_old"  class="map"></div></td>
+    <td style="width:50%;height:50%;" > <div style="width:100%;height:100%;"  id="map1"  class="map"></div></td>
+   
+  </tr>
+
+  <tr>
+    <td style="width:50%;height:50%;" > <div style="width:100%;height:100%;"  id="map2" class="map"></div></td>
+    <td style="width:50%;height:50%;" > <div style="width:100%;height:100%;"  id="map3" class="map"></div></td>
+    
+  </tr>
+  
+</table>   
+	    <br>
+	    Datenquellen: Land Tirol - data.tirol.gv.at u. Tiroler Landesarchiv.  Diese Anwendung nutzt: <a href="https://openlayers.org">https://openlayers.org</a> <br>Weitere Infos unter: <a href="https://www.egger-gis.at/urmappe">https://egger-gis.at</a>
+        
+     
+   
+        
+
+
+       
+
+
+        
+
+   
+       
+        <script>
+
+            var projection = new ol.proj.Projection({
+                code: 'EPSG:3857',
+                units: 'm'
+            });
+var mapMinZoom = 13;
+var mapMaxZoom = 18;
+
+            
+           
+            var layers3 = [
+                new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+			    
+                        url: 'https://gis.tirol.gv.at/arcgis/services/Service_Public/orthofoto/MapServer/WMSServer',
+                        crossOrigin: 'anonymous',
+                        params: {
+                            'LAYERS': 'Image_Aktuell_RGB'
+
+                        }
+                    })
+                })
+
+            ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var mapExtent1 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
+var layer2 = new ol.layer.Tile({
+  extent: mapExtent1,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile1/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent2 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');
+var layer3 = new ol.layer.Tile({
+  extent: mapExtent2,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile2/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent3 = ol.proj.transformExtent([11.381836, 47.208416, 11.459891, 47.219568], 'EPSG:4326', 'EPSG:3857');
+var layer4 = new ol.layer.Tile({
+  extent: mapExtent3,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile3/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+
+
+var mapExtent5 = ol.proj.transformExtent([11.297585, 47.249406, 11.337891, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer5 = new ol.layer.Tile({
+  extent: mapExtent5,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile5/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent7 = ol.proj.transformExtent([11.381836, 47.249406, 11.425778, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer7 = new ol.layer.Tile({
+  extent: mapExtent7,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile7/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent6 = ol.proj.transformExtent([11.337891, 47.249406, 11.381833, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer6 = new ol.layer.Tile({
+  extent: mapExtent6,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile6/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+var mapExtent8 = ol.proj.transformExtent([11.425781, 47.249406, 11.459887, 47.309034], 'EPSG:4326', 'EPSG:3857');
+var layer8 = new ol.layer.Tile({
+  extent: mapExtent8,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile8/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+
+var mapExtent9 = ol.proj.transformExtent([11.337891, 47.219570, 11.459888, 47.249407], 'EPSG:4326', 'EPSG:3857');
+var layer9 = new ol.layer.Tile({
+  extent: mapExtent9,
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/maegger.github.io/raw/master/tile9/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })
+});
+
+
+
+var osm = new ol.layer.Tile({
+  source: new ol.source.OSM()
+});
+
+var map_old = new ol.Map({
+    controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+  target: 'map_old',
+  layers: [
+   layer2,layer3,layer4,layer5,layer6,layer7,layer8, layer9
+    
+  ],
+  view: new ol.View({
+    center: [1271351,	5986142],
+    zoom: 11,minZoom: 11,maxZoom:18
+  })
+});
+
+
+
+
+
+
+var layers1 = 
+                [new ol.layer.Tile({
+  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
+
+           ;
+
+
+
+var layers2 = 
+                [new ol.layer.Tile({
+  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/1970/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
+
+           ;
+
+
+
+
+
+
+
+
+
+            var map1 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers1,
+               target: 'map1',
+                view: new ol.View({
+                   projection: projection,
+                    center: [1271351,	5986142],
+                   zoom: 11,minZoom: 11,
+maxZoom: 18
+               })
+            });
+            var map2 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers2,
+                target: 'map2',
+                view: new ol.View({
+                    projection: projection,
+                    center: [1271351,	5986142],
+                    zoom: 11,minZoom: 11,
+maxZoom: 18
+                })
+            });
+            var map3 = new ol.Map({
+                controls: ol.control.defaults().extend([
+                    new ol.control.ScaleLine()
+                ]),
+                layers: layers3,
+                target: 'map3',
+                view: new ol.View({
+                    projection: projection,
+                    center: [1271351,	5986142],
+                    zoom: 11,minZoom: 11,
+maxZoom: 18
+                })
+            });
+		function onMoveEndmap(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map_old.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map_old.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map_old.getSize());
+                map1.getView().setZoom(zo);
+            }
+            function onMoveEndmap1(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map1.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map1.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map1.getSize());
+                map1.getView().setZoom(zo);
+map_old.getView().fit(extent, map1.getSize());
+                map_old.getView().setZoom(zo);
+            }
+            function onMoveEndmap2(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map2.getSize());
+                var zo = map.getView().getZoom();
+                map3.getView().fit(extent, map2.getSize());
+                map3.getView().setZoom(zo);
+                map1.getView().fit(extent, map2.getSize());
+                map1.getView().setZoom(zo);
+map_old.getView().fit(extent, map2.getSize());
+                map_old.getView().setZoom(zo);
+
+            }
+
+            function onMoveEndmap3(evt) {
+                var map = evt.map;
+                var extent = map.getView().calculateExtent(map3.getSize());
+                var zo = map.getView().getZoom();
+                map1.getView().fit(extent, map3.getSize());
+                map1.getView().setZoom(zo);
+                map2.getView().fit(extent, map3.getSize());
+                map2.getView().setZoom(zo);
+map_old.getView().fit(extent, map3.getSize());
+                map_old.getView().setZoom(zo);
+
+            }
+map_old.on('moveend', onMoveEndmap);
+            map1.on('moveend', onMoveEndmap1);
+            map2.on('moveend', onMoveEndmap2);
+            map3.on('moveend', onMoveEndmap3);
+        </script>
+    </body>
+</html>
