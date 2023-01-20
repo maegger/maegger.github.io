@@ -219,7 +219,18 @@ var map_old = new ol.Map({
 
 
 
+var layersold = 
+                [new ol.layer.Tile({
+  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
+  source: new ol.source.XYZ({
+    
+    url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",
+    tilePixelRatio: 1.000000,
+    minZoom: mapMinZoom,
+    maxZoom: mapMaxZoom
+  })})]
 
+           ;
 
 
 var layers1 = 
