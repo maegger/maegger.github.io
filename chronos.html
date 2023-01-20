@@ -84,117 +84,6 @@ var mapMaxZoom = 18;
             ];
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-var mapExtent1 = ol.proj.transformExtent([11.321432, 47.338825, 11.409848, 47.368594], 'EPSG:4326', 'EPSG:3857');
-var layer2 = new ol.layer.Tile({
-  extent: mapExtent1,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile1/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtent2 = ol.proj.transformExtent([11.324427, 47.309036, 11.419668, 47.338823], 'EPSG:4326', 'EPSG:3857');
-var layer3 = new ol.layer.Tile({
-  extent: mapExtent2,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile2/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtent3 = ol.proj.transformExtent([11.381836, 47.208416, 11.459891, 47.219568], 'EPSG:4326', 'EPSG:3857');
-var layer4 = new ol.layer.Tile({
-  extent: mapExtent3,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile3/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-
-
-var mapExtent5 = ol.proj.transformExtent([11.297585, 47.249406, 11.337891, 47.309034], 'EPSG:4326', 'EPSG:3857');
-var layer5 = new ol.layer.Tile({
-  extent: mapExtent5,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile5/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtent7 = ol.proj.transformExtent([11.381836, 47.249406, 11.425778, 47.309034], 'EPSG:4326', 'EPSG:3857');
-var layer7 = new ol.layer.Tile({
-  extent: mapExtent7,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile7/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtent6 = ol.proj.transformExtent([11.337891, 47.249406, 11.381833, 47.309034], 'EPSG:4326', 'EPSG:3857');
-var layer6 = new ol.layer.Tile({
-  extent: mapExtent6,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile6/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-var mapExtent8 = ol.proj.transformExtent([11.425781, 47.249406, 11.459887, 47.309034], 'EPSG:4326', 'EPSG:3857');
-var layer8 = new ol.layer.Tile({
-  extent: mapExtent8,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile8/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
-
-
-var mapExtent9 = ol.proj.transformExtent([11.337891, 47.219570, 11.459888, 47.249407], 'EPSG:4326', 'EPSG:3857');
-var layer9 = new ol.layer.Tile({
-  extent: mapExtent9,
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/maegger.github.io/raw/master/tile9/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })
-});
 var layersold = 
                 [new ol.layer.Tile({
   extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
@@ -221,7 +110,6 @@ var map_old = new ol.Map({
   target: 'map_old',
   layers: [
    layersold
-    
   ],
   view: new ol.View({
     center: [1271351,	5986142],
@@ -229,20 +117,6 @@ var map_old = new ol.Map({
   })
 });
 
-
-
-var layersold = 
-                [new ol.layer.Tile({
-  extent: [1152344.271424, 5868203.168507, 1391480.029906, 6107338.926989],
-  source: new ol.source.XYZ({
-    
-    url: "https://github.com/maegger/1940/raw/master/tile/{z}/{x}/{y}.png",
-    tilePixelRatio: 1.000000,
-    minZoom: mapMinZoom,
-    maxZoom: mapMaxZoom
-  })})]
-
-           ;
 
 
 var layers1 = 
